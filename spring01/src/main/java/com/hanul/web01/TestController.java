@@ -117,13 +117,13 @@ public class TestController {
 	
 	
 	//redirect는 어떻게 해야하나 ????????????????
-	
+	// redirect:매핑요청주소!!!!!!!!!!!!!!!!!!!!
 	@RequestMapping("/login_result")
 	public String login(String id, String pw, Model model) {
 		//성공  vs 실패
 		if(id.equals("admin") && pw.equals("1234")) {
 			//return "home";     //forward 방식
-			return "redirect:/";
+			return "redirect:/";        
 		} else {
 			//return "member/login";  //forward방식
 			return "redirect:/login";
