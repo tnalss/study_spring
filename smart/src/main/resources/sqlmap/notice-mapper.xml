@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+
+<!-- notice 목록 -->
+<select id='notice_list' resultType='notice.NoticeVO'>
+select * from notice order by id desc
+</select>
+
+<!--  -->
+<select id="notice_info" resultType='notice.NoticeVO'>
+select * from notice where id = #{id}
+
+</select>
+
+<!--  -->
+<insert id="notice_insert">
+
+insert into notice(title,content,writer)
+values (#{title},#{content},'admin')
+
+</insert>
+
+<update id="notice_update">
+
+update notice set title = #{title},content = #{content}
+ where id = #{id}
+
+
+</update>
+<delete id="notice_delete">
+
+delete notice
+where id = #{id}
+</delete>
+
+<update id="notice_readcnt_update"> 
+update notice set readcnt = readcnt+1
+where id = #{id}
+
+</update>
+</mapper>
+

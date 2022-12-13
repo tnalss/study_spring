@@ -22,11 +22,11 @@
 
 </head>
 <body>
-<tiles:insertAttribute name="header" />
+<tiles:insertAttribute name="header" ignore="true"/>
 <div style='margin:20px auto'>
-<tiles:insertAttribute name="container" />
+<tiles:insertAttribute name="container" ignore="true"/>
 </div>
-<tiles:insertAttribute name="footer" />
+<tiles:insertAttribute name="footer" ignore="true"/>
 </body>
 </html>
 
