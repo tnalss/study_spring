@@ -45,7 +45,7 @@ public class HomeController {
 		int[] data = {1,2,3,4,5,6,7,8,9,0};
 		TempDTO dto = new TempDTO("data123");
 		
-		ArrayList<TempDTO> list = new ArrayList<>();
+		ArrayList<TempDTO> list = new ArrayList<TempDTO>();
 		list.add(new TempDTO("asdfasdf"));
 		list.add(new TempDTO("asdfasdf"));
 		list.add(new TempDTO("asdfasdf"));
