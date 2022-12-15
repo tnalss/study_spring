@@ -6,6 +6,8 @@ import java.security.SecureRandom;
 
 import org.springframework.stereotype.Service;
 
+import member.MemberVO;
+
 @Service
 public class CommonService {
 	//솔트 생성 메소드
@@ -42,6 +44,14 @@ public class CommonService {
 			e.printStackTrace();
 		}
 		return pw;
+	}
+	
+	//임시 비밀번호 이메일 전송처리
+	public boolean sendPassword(MemberVO vo, String pw) {
+		boolean send =true;
+		
+		
+		return send;
 	}
 	
 }

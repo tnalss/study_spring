@@ -13,4 +13,11 @@ public interface MemberService {
 	
 	//관리자모드 에서는 전체 회원목록 확인
 	List<MemberVO> member_list();
+	
+	//솔트정보를 불러오기 위한 메소드
+	String member_salt(String userid);
+	
+	//아이디 이메일 일치하는 회원의 이름을 조회
+	String member_userid_email(MemberVO vo);
+	
 }

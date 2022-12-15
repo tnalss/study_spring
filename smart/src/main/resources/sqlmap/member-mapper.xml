@@ -19,4 +19,17 @@ select * from member
 select * from member where userid = #{id} and userpw = #{pw}
 </select>
 
+
+<!-- 솔트 조회 -->
+<select id='salt' resultType='string'>
+
+select salt from member where userid = #{userid}
+</select>
+
+<!-- d아이디  이메일 일치 회원조회 -->
+<select id="userid_email" resultType='string'>
+
+select name from member where userid = #{userid} and email = #{email}
+
+</select>
 </mapper>

@@ -46,13 +46,24 @@ public class MemberDAO implements MemberService {
 
 	@Override
 	public int member_delete(String userid) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public List<MemberVO> member_list() {
 		return sql.selectList("member.list");
+	}
+
+	@Override
+	public String member_salt(String userid) {
+		
+		return sql.selectOne("member.salt",userid);
+	}
+
+	@Override
+	public String member_userid_email(MemberVO vo) {
+		
+		return sql.selectOne("member.userid_email",vo);
 	}
 
 }

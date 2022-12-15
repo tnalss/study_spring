@@ -9,17 +9,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import common.CommonService;
 import member.MemberService;
 import member.MemberVO;
 
 @Controller
 public class MemberController {
+	
 	@Autowired private MemberService member;
 //	@Autowired private MemberServiceImpl service;
 //	private MemberService member;
 //	public MemberController(MemberService member) {
 //		this.member = member;
 //	}
+	@Autowired private CommonService common;
 	
 	//로그아웃처리 요청
 	@RequestMapping("/logout")
@@ -30,11 +33,43 @@ public class MemberController {
 		return "redirect:/";
 	}	
 	
+	//비밀번호 재발급처리 요청
+		@ResponseBody
+		@RequestMapping(value = "/reset" ,  produces="text/html; charset=utf-8")
+		public String reset(MemberVO vo) {
+			//비지니스로직-화면에서 입력한 아이디/이메일이 일치하는 회원에게 임시 비번을 발급해준다 
+			//임시 비번을 생성한 후 회원정보에 변경저장 하고, 임시비번을 회원에게 이메일로 알려준다
+			String name = member.member_userid_email(vo);
+			
+			if( name == null ) {
+				
+				StringBuffer msg = new StringBuffer("<script>");
+				msg.append("alert('일치하는 정보가 없습니다. \\n확인하세요!');");
+				msg.append("history.go(-1);");
+				msg.append("</script>");
+				
+				return msg.toString();
+			}
+			
+			return "";
+		}
+		
+		
 	
+	//비밀번호찾기 화면 요청 - 비밀번호재발급(임시비번발급) 화면
+	@RequestMapping("/find")
+	public String find() {
+		return "default/member/find";
+	}
 	
 	//로그인처리 요청
 	@ResponseBody @RequestMapping("/smartLogin")
 	public boolean login(String id, String pw, HttpSession session) {
+		//해당 아이디의 salt를 조회해온다.
+		String salt = member.member_salt(id);
+		
+		pw = common.getEncrypt(salt, pw);//db에서 조회해온 salt를 사용해 화면에서 입력한 비번을 암호화
+		
 		//비지니스로직-화면에서 입력한 아이디/비번이 일치하는 회원정보를 DB에서 조회한다
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("id", id);
