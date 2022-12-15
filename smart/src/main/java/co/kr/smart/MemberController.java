@@ -1,6 +1,7 @@
 package co.kr.smart;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -51,7 +52,26 @@ public class MemberController {
 				return msg.toString();
 			}
 			
-			return "";
+			String pw = UUID.randomUUID().toString();
+			pw = pw.substring(pw.lastIndexOf("-")+1);
+			
+			String salt =  common.generateSalt();
+			vo.setSalt(salt);
+			vo.setUserpw(common.getEncrypt(salt, pw));
+			vo.setName(name);
+			
+			StringBuffer msg = new StringBuffer("<script>");
+			
+			if ( member.member_myInfo_update(vo) ==1 && common.sendPassword(vo, pw)) {
+				msg.append("alert('임시비밀번호가 발송되었습니다.\\n이메일을 확인하세요.');");
+				msg.append("location='login';"); //임시비밀번호로 로그인 시도할 수 있도록 로그인하면 연결
+			}else {
+				msg.append("alert('임시 비밀번호 발급 실패');");
+				msg.append("history.go(-1);");
+			}
+			
+			msg.append("</script>");
+			return msg.toString();
 		}
 		
 		
