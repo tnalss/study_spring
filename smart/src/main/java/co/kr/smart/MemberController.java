@@ -33,6 +33,11 @@ public class MemberController {
 		//응답화면연결
 		return "redirect:/";
 	}	
+	//비밀번호 변경 화면 요청
+		@RequestMapping("/changePW")
+		public String changePw() {
+			return "member/change";				
+		}
 	
 	//비밀번호 재발급처리 요청
 		@ResponseBody
