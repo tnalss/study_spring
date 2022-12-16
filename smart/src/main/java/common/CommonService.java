@@ -33,9 +33,9 @@ public class CommonService {
 		      BufferedReader br;
 		      System.out.print("responseCode="+responseCode);
 		      if(responseCode==200) { // 정상 호출
-		        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		        br = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));
 		      } else {  // 에러 발생
-		        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+		        br = new BufferedReader(new InputStreamReader(con.getErrorStream(),"utf-8"));
 		      }
 		      String inputLine;
 		      StringBuffer res = new StringBuffer();
@@ -65,9 +65,9 @@ public class CommonService {
 		      BufferedReader br;
 		      System.out.print("responseCode="+responseCode);
 		      if(responseCode==200) { // 정상 호출
-		        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		        br = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));
 		      } else {  // 에러 발생
-		        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+		        br = new BufferedReader(new InputStreamReader(con.getErrorStream(),"utf-8"));
 		      }
 		      String inputLine;
 		      StringBuffer res = new StringBuffer();
