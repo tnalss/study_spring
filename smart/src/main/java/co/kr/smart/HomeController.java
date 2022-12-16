@@ -40,7 +40,7 @@ public class HomeController {
 		 //salt를 만든다 
 			//  if( vo.getUserpw()!=null ) { String salt = common.generateSalt();
 		  //String pw = common.getEncrypt(salt, vo.getUserpw()); vo.setSalt(salt);
-		 //vo.setUserpw(pw); member.member_myInfo_update(vo); } }
+		 //vo.setUserpw(pw); member.member_password_update(vo); } }
 		 //-----------------------------------------------
 		 
 		

@@ -2,8 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 
+
+<select id="idCheck" resultType="integer">
+select count(*) from member where userid = #{userid}
+</select>
+
+<insert id="join">
+INSERT into member (userid,userpw,name,gender,email,phone,post,address,social,profile,birth,salt)
+VALUES ( #{userid}, #{userpw,jdbcType=VARCHAR},#{name},#{gender},#{email,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{post,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{social,jdbcType=VARCHAR},#{profile,jdbcType=VARCHAR},#{birth,jdbcType=VARCHAR},#{salt,jdbcType=VARCHAR} )
+
+</insert>
+
+
 <!-- 회원정보변경: 내정보수정 -->
 <update id="myInfo_update">
+update member 
+set salt = #{salt,jdbcType=VARCHAR}, userpw = #{userpw,jdbcType=VARCHAR} , name=#{name,jdbcType=VARCHAR}, email=#{email,jdbcType=VARCHAR},
+gender=#{gender}, profile=#{profile,jdbcType=VARCHAR}, phone = #{phone,jdbcType=VARCHAR},social=#{social,jdbcType=VARCHAR}
+where userid = #{userid}
+</update>
+
+<!-- 비밀번호변경: 임시비번발급시, 비밀번호 변경시 -->
+<update id="password_update">
 update member 
 set salt = #{salt}, userpw = #{userpw} 
 where userid = #{userid}

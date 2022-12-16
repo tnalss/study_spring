@@ -24,6 +24,13 @@
 <script src='js/member.js?<%=new java.util.Date()%>'></script>
 <script>
 $('[type=password]').keyup(function(){
+	if( $(this).attr('name') == 'userpw' ){
+		var equal = $(this).val()==$('[name=userpw_ck]').val();
+		$('[name=userpw_ck]').siblings('div')
+				.removeClass('valid invalid')
+				.addClass( equal ? 'valid' : 'invalid' )
+				.text(equal ? '비밀번호가 일치' : '비밀번호가 불일치');
+	}
 	var status = member.tag_status( $(this) );
 	$(this).siblings('div').text( status.desc )
 		.removeClass('valid invalid').addClass( status.code );

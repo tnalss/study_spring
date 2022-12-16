@@ -3,8 +3,10 @@ package co.kr.smart;
 import java.util.HashMap;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,9 @@ public class MemberController {
 //		this.member = member;
 //	}
 	@Autowired private CommonService common;
+	
+	private String NaverClientId="jc0TvUqPpVAcscvLYPgz";
+	private String NaverClientSecret="C7BBbocmZB";
 	
 	//로그아웃처리 요청
 	@RequestMapping("/logout")
@@ -67,7 +72,7 @@ public class MemberController {
 			
 			StringBuffer msg = new StringBuffer("<script>");
 			
-			if ( member.member_myInfo_update(vo) ==1 && common.sendPassword(vo, pw)) {
+			if ( member.member_password_update(vo) ==1 && common.sendPassword(vo, pw)) {
 				msg.append("alert('임시비밀번호가 발송되었습니다.\\n이메일을 확인하세요.');");
 				msg.append("location='login';"); //임시비밀번호로 로그인 시도할 수 있도록 로그인하면 연결
 			}else {
@@ -112,4 +117,114 @@ public class MemberController {
 		session.setAttribute("category", "login");
 		return "default/member/login";
 	}
+	
+	//비밀번호 변경처리 요청
+	@RequestMapping("/changePassword")
+	public String changePassword(String userpw,HttpSession session) {
+		//비지니스 로직 - 화면에서 입력한 비밀버호로 db에 변경저장한다.
+		//  기존의 솔트를 사용해서 새로입력한 비번을 암호화 기존솔트는 세션에 존재
+		MemberVO vo = (MemberVO) session.getAttribute("loginInfo");
+		userpw =  common.getEncrypt(vo.getSalt(), userpw);
+		
+		
+		vo.setUserpw(userpw);
+		member.member_password_update(vo);
+	
+		//바뀐정보 다시 담아줘야하는 처리
+		session.setAttribute("loginInfo", vo);
+		
+		//응답화면 redirect로 웰컴페이지로
+		return "redirect:/";
+		
+	}
+	
+	@RequestMapping("/naverLogin")
+	public String naverLogin(HttpServletRequest request , HttpSession session) {
+		//https://nid.naver.com/oauth2.0/authorize?response_type=code
+		//&client_id=CLIENT_ID
+		//&state=STATE_STRING
+		//&redirect_uri=CALLBACK_URL
+		String state =  UUID.randomUUID().toString();		
+		session.setAttribute("state", state);
+		
+		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/authorize?response_type=code");
+		url.append("&client_id=").append(NaverClientId);
+		url.append("&state=").append(state);
+		url.append("&redirect_uri=").append(common.appURL(request)).append("/navercallback");
+		
+		//동의항목 재동의 요청
+		//url.append("&auth_type=reprompt");
+		
+		
+		return "redirect:"+url.toString();
+	}
+	@RequestMapping("/navercallback")
+	public String navercallback(String code,String state, HttpSession session) {
+		//코드가 null이거나 state가 같지 않을 경우 날려버림
+		if ( code == null || ! state.equals(session.getAttribute("state")) ) 
+			return "redirect:/";
+		
+		//정상처리
+		
+		//https://nid.naver.com/oauth2.0/token?grant_type=authorization_code
+		//&client_id=jyvqXeaVOVmV
+		//&client_secret=527300A0_COq1_XV33cf
+		//&code=EIc5bFrl4RibFls1
+		//&state=9kgsGTfH4j7IyAkg
+		
+		StringBuffer url = new StringBuffer("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code");
+		url.append("&client_id=").append(NaverClientId);
+		url.append("&client_secret=").append(NaverClientSecret);
+		url.append("&code=").append(code);
+		url.append("&state=").append(state);
+		
+		//json값을 받을 json라이브러리 필요
+		String response = common.requestAPI(url.toString());
+		JSONObject json = new JSONObject(response);
+		
+		String token = json.getString("access_token");
+		String type = json.getString("token_type");
+		
+		//"https://openapi.naver.com/v1/nid/me"
+	    //Authorization: Bearer AAAAPIuf0L+qfDkMABQ3IJ8heq2mlw71DojBj3oc2Z6OxMQESVSrtR0dbvsiQbPbP1/cxva23n7mQShtfK4pchdk/rc="
+
+		response = common.requestAPI("https://openapi.naver.com/v1/nid/me", type +" "+token);
+		json = new JSONObject(response);
+	    
+		//api호출 겨로가코드가 00인경우 프로필정보에 접근
+		if( json.getString("resultcode").equals("00")) {
+			MemberVO vo = new MemberVO();
+			vo.setSocial("N");
+			
+			json = json.getJSONObject("response");
+			vo.setUserid( json.getString("id") );
+			//nickname, name, email, gender(- F: 여성,- M: 남성,- U: 확인불가), profile_image, mobile
+			//vo.setName( json.has("nickname") ? json.getString("nickname") : "");
+			vo.setName( jsonValue(json,"nickname") );
+			if( vo.getName().isEmpty() ) 
+				vo.setName( jsonValue(json,"name",  "...") );
+			vo.setEmail( jsonValue(json,"email") );
+			vo.setGender( jsonValue( json,"gender", "M").equals("M") ? "남" : "여" );
+			vo.setProfile( jsonValue(json, "profile_image") );
+			vo.setPhone( jsonValue(json,"mobile") );
+			
+			if( member.member_idCheck(vo.getUserid())==1 ) { //update
+				member.member_myInfo_update(vo);
+			}else { //insert
+				member.member_join(vo);
+			}
+			//소셜로그인되게 세션에 로그인정보를 담는다
+			session.setAttribute("loginInfo", vo);
+		}
+	    
+	    
+		return "redirect:/";
+	}
+	private String jsonValue(JSONObject json , String key) {
+		return json.has(key) ? json.getString(key) : "";
+	}
+	private String jsonValue(JSONObject json , String key,String defaultValue) {
+		return json.has(key) ? json.getString(key) : defaultValue;
+	}
+	
 }
