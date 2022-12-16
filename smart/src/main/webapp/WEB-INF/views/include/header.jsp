@@ -57,11 +57,13 @@ header div li:not(:first-child) {
 			</c:if>
 			<!-- 로그인한 경우 -->
 			<c:if test="${not empty loginInfo}">
-				<c:if test="${ empty loginInfo.profile}">
+				<c:if test="${empty loginInfo.profile}">
 					<li><i class="font-profile fa-regular fa-user"></i></li>
+					
 				</c:if>
-				<c:if test="${not empty loginInfo.profile} ">
-					<li><img src="${loginInfo.profile}" alt="프로필" class='profile' /></li>
+				<c:if test="${not empty loginInfo.profile}">
+					<li><img src='${loginInfo.profile}' alt="프로필" class='profile' /></li>
+				
 				</c:if>
 				<li><strong>${loginInfo.name}</strong></li>
 				<li><a class='btn-fill' href='changePW'>비밀번호변경</a></li>
