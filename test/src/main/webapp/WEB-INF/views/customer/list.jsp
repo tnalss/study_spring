@@ -25,7 +25,34 @@
 			<jsp:include page="/WEB-INF/views/include/topnav.jsp"/>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <h1 class="mt-4">홈페이지</h1>
+                   <h2>고객목록</h2>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">이름</th>
+      <th scope="col">성별</th>
+      <th scope="col">이메일</th>
+      <th scope="col">전화번호</th>
+    </tr>
+  </thead>
+  <tbody>
+    <c:forEach var='vo'  items='${list}'>
+    <tr>
+      <th scope="row">${vo.id}</th>
+      <td>${vo.name}</td>
+      <td>${vo.gender}</td>
+      <td>${vo.email}</td>
+      <td>${vo.phone}</td>
+    </tr>
+	</c:forEach>
+  </tbody>
+</table>
+
+
+
+
+
                     
                 </div>
             </div>
