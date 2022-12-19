@@ -31,6 +31,10 @@ header nav li a.active, header nav li a:hover {
 header div li:not(:first-child) {
 	margin-left: 5px;
 }
+
+
+
+.font-profile { font-size: 30px; }
 </style>
 <header>
 	<nav>

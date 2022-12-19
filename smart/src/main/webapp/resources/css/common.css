@@ -124,12 +124,19 @@ div.invalid { color: #ff0000; font-size: 14px; font-weight: bold; }
 .w-px1000 { width:1000px }
 .w-px1200 { width:1200px }
 
+.align{display:flex; align-items: center;}
+.align > * { margin-right: 5px}
+.full{width:calc(100% - 30px);}
+#delete,#attach-file,#delete-file{display:none;}
+.date + #delete {position:relative; right:30px;}
+#preview img{max-height:24px;}
+.font-b{color:black;}
+.font-red{font-size:20px; color:#ff0000}
+.kakao{background: url("../img/kakaologin.png") center no-repeat; background-size:cover;}
+.naver{background: url("../img/naverlogin.png") center no-repeat; background-size:cover;}
 .profile{
 	width:30px;
 	height:30px;
 	border-radius: 50%;
-	
+
 }
-.font-profile { font-size: 30px; }
-.kakao{background: url("../img/kakaologin.png") center no-repeat; background-size:cover;}
-.naver{background: url("../img/naverlogin.png") center no-repeat; background-size:cover;}

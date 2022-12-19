@@ -31,6 +31,15 @@ public class MemberController {
 	private String NaverClientSecret="C7BBbocmZB";
 	private String KakaoClientId="8aaf02d56e30aa6fd895baa3b52265d2";
 	
+	
+	//회원가입화면 요청
+	@RequestMapping("/member")
+	public String member(HttpSession session) {
+		session.setAttribute("category","join");
+		return "member/join";
+	}
+	
+	
 	//로그아웃처리 요청
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
@@ -284,6 +293,16 @@ public class MemberController {
 		}
 		
 		return "redirect:/";
+	}
+	
+	//아이디 중복확인 요청
+	@ResponseBody
+	@RequestMapping("/idCheck")
+	public boolean idCheck(String id) {
+		//비지니스 로직 - 화면에서 입력한 아이디가 db에 존재하는 지 확인.
+		// 0 - 아이디 없음  1 - 아이디 있음 중복됨.
+		return member.member_idCheck(id) == 0 ? false : true  ;
+			
 	}
 	
 	
