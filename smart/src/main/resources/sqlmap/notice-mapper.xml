@@ -4,12 +4,17 @@
 
 <!-- notice 목록 -->
 <select id='notice_list' resultType='notice.NoticeVO'>
-select * from notice order by id desc
+select n.*,m.name
+from notice n left join member m
+on n.writer = m.userid
+order by id desc
 </select>
 
 <!--  -->
 <select id="notice_info" resultType='notice.NoticeVO'>
-select * from notice where id = #{id}
+select n.* , m.name
+from notice n left join member m on n.writer=m.userid
+where id = #{id}
 
 </select>
 

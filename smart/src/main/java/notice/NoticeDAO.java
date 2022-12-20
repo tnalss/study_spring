@@ -15,9 +15,8 @@ public class NoticeDAO implements NoticeService {
 	
 	
 	@Override
-	public void notice_insert(NoticeVO vo) {
-		sql.insert("notice.notice_insert",vo);
-	
+	public int notice_insert(NoticeVO vo) {
+		return sql.insert("notice.notice_insert",vo);
 
 	}
 
@@ -33,21 +32,21 @@ public class NoticeDAO implements NoticeService {
 	}
 
 	@Override
-	public void notice_update(NoticeVO vo) {
-		sql.update("notice.notice_update",vo);
-
+	public int notice_update(NoticeVO vo) {
+		return sql.update("notice.notice_update",vo);
+		
 	}
 
 	@Override
-	public void notice_delete(int id) {
-		sql.delete("notice.notice_delete",id);
+	public int notice_delete(int id) {
+		return sql.delete("notice.notice_delete",id);
 
 	}
 
 
 	@Override
-	public void notice_readcnt_update(int id) {
-		sql.update("notice.notice_readcnt_update",id);
+	public int notice_readcnt_update(int id) {
+		return sql.update("notice.notice_readcnt_update",id);
 	}
 
 	

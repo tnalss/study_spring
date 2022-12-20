@@ -37,7 +37,7 @@ public class NoticeController {
 		return "notice/info";
 	}
 	
-	@RequestMapping("/write.no")
+	@RequestMapping("/new.no")
 	public String write() {
 		
 		return "notice/write";

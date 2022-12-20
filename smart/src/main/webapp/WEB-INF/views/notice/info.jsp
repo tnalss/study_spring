@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<table>
+<table class="w-px1200">
 
 <tr>
 	<th>번호</th>
@@ -27,7 +27,7 @@
 
 <tr>
 	<th>작성자</th>
-	<td>${vo.writer}</td>
+	<td>${vo.name}</td>
 </tr>
 
 <tr>
@@ -44,8 +44,16 @@
 </table>
 
 <div class='btnSet'>
+
+<a class='btn-fill' onclick='history.go(-1)' >공지글목록</a>
+
+<c:if test="${loginInfo.userid eq vo.writer }">
 <a class='btn-fill' href='modify.no?id=${vo.id}'>수정</a>
 <a class='btn-fill btn-delete'>글 삭제</a>
+</c:if>
+
+
+
 </div>
 
 <script>
