@@ -60,10 +60,20 @@ public class AndController {
 		map.put("pw", pw);
 		MemberVO vo = dao.member_login(map);
 
-		if(vo!=null) 
-			return "로그인성공";
-		else
+		if(vo!=null) {
+			System.out.println(email+ " : " + pw);
+			return new Gson().toJson(vo);
+		}
+		else {
+			System.out.println(email+ " : " + pw);
 			return "실패";
+		}
+	 }
+	 
+	 @RequestMapping("/social.me")
+	 public void kakao_login(String email) {
+		 System.out.println(email);
+		 
 	 }
 	 
 	 
