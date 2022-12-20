@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import common.CommonService;
 import member.MemberService;
@@ -32,12 +33,52 @@ public class MemberController {
 	private String KakaoClientId="8aaf02d56e30aa6fd895baa3b52265d2";
 	
 	
+	
+	
 	//회원가입화면 요청
 	@RequestMapping("/member")
 	public String member(HttpSession session) {
 		session.setAttribute("category","join");
 		return "member/join";
 	}
+	
+	//회원가입폼 요청
+	@ResponseBody
+	@RequestMapping(value = "/join" , produces = "text/html; charset=utf-8")
+	public String join(MemberVO vo, MultipartFile profile_image , HttpServletRequest request) {
+		//salt만들어서 비밀번호 복호화 필요
+		String salt =  common.generateSalt();
+		vo.setSalt(salt);
+		vo.setUserpw(common.getEncrypt(salt, vo.getUserpw()));
+		
+		
+		//첨부된 프로필 파일이 있는 경우 업로드하는 처리 필요
+		if( ! profile_image.isEmpty() ) {
+			//서버의 물리적영역에 첨부파일을 저장한다.
+			//커먼서비스에 메소드생성 파일저장 및 주소 값 반환
+			vo.setProfile(common.fileUplaod("myinfo", profile_image, request));
+						
+		}
+		
+		
+		
+		//회원가입 잘된경우와 안된 경우 분기
+		StringBuffer msg = new StringBuffer("<script>");
+		if ( member.member_join(vo) == 1) {
+			msg.append("alert('회원가입을 축하합니다 ^^*'); location='")
+			.append( request.getContextPath() )
+			.append("';");
+		}else {
+			msg.append("alert('회원가입 실패'); histiry.go(-1); ");
+			
+		}
+		msg.append("</script>");
+		
+		
+		return msg.toString();
+	}
+	
+	
 	
 	
 	//로그아웃처리 요청

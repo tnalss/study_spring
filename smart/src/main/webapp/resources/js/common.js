@@ -9,6 +9,7 @@
 
 
 $(function() {
+	if($('date').length>0){
 	//달력
 	$.datepicker.setDefaults({
 		dateFormat: 'yy-mm-dd',
@@ -18,8 +19,8 @@ $(function() {
 		changeYear: true,
 		changeMonth: true,
 
-	})
-
+	});
+}
 	//파일첨부관련처리
 	$('#attach-file').change(function() {
 		//console.log( this.files[0] ) //선택한 파일 정보

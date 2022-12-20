@@ -1,16 +1,17 @@
 package com.and.middle;
 
+import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
 import and.AndDAO;
 import customer.CustomerVO;
+import member.MemberVO;
 
 
 @RestController
@@ -36,16 +37,35 @@ public class AndController {
 		 return new Gson().toJson(dao.customer_select());
 	}
 	 
-	
+	 @RequestMapping(value = "/memberOne",produces="text/html;charset=utf-8")
+	 public String memberOne() {
+		 List<CustomerVO> list = dao.customer_select();
+		 return new Gson().toJson(list.get(0));
+	}
 	
 	 @RequestMapping(value= "/andVo", produces = "text/html;charset=utf-8")
 	 public String andVo() {
-	  
 		 List<CustomerVO> list = dao.customer_select();
 		 for (CustomerVO v : list) {
 			System.out.println(v.getEmail());
 		}
-		 
 		 return new Gson().toJson(list.get(1));
 	 }
+	 
+
+	 @RequestMapping(value= "/login", produces = "text/html;charset=utf-8")
+	 public String login(String email, String pw) {
+		 HashMap<String, String> map = new HashMap<String, String>();
+		map.put("email", email);
+		map.put("pw", pw);
+		MemberVO vo = dao.member_login(map);
+
+		if(vo!=null) 
+			return "로그인성공";
+		else
+			return "실패";
+	 }
+	 
+	 
+	 
 }

@@ -19,17 +19,16 @@ public class HomeController {
 		return "home";//응답화면을 home
 	}
 
-	@ResponseBody
-	@RequestMapping("/login")
-	public String login(String id, String pw) {
-		if ( id.equals("admin") && pw.equals("admin1234") ) {
-			
-			return "login";	
-		}else {
-			return "비밀번호 틀림";
-		}
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping("/login") public String login(String id, String pw) { if (
+	 * id.equals("admin") && pw.equals("admin1234") ) {
+	 * 
+	 * return "login"; }else { return "비밀번호 틀림"; }
+	 */
 		
-	}
+	//}
 	
 	
 	

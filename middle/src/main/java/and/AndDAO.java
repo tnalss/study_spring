@@ -1,6 +1,6 @@
 package and;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import customer.CustomerVO;
+import member.MemberVO;
 
 @Repository
 public class AndDAO {
@@ -24,6 +25,11 @@ public class AndDAO {
 	public List<CustomerVO> customer_select() {
 		
 		return sql.selectList("and.customer");
-		
+
 	}
+	public MemberVO member_login(HashMap<String, String> map) {
+		return sql.selectOne("me.login",map);
+	}
+	
+
 }

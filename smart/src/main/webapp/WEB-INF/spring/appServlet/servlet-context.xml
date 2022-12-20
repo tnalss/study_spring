@@ -17,6 +17,12 @@
 	<resources location="/resources/css/" mapping="/css/**"/>
 	<resources location="/resources/js/" mapping="/js/**"/>
 	<resources location="/resources/images/" mapping="/img/**"/>
+	<resources location="/resources/upload/" mapping="/upload/**"/>
+	
+	
+	
+	
+	
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -31,6 +37,18 @@
 		<beans:property name="definitions" 
 						value="/WEB-INF/views/tiles/config.xml"/>
 	</beans:bean>
+	
+	
+	<!-- 파일업로드를 위한 빈 추가 -->
+	
+	<beans:bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id='multipartResolver'>
+		<beans:property name="defaultEncoding" value="utf-8"/>
+	
+	</beans:bean>
+	
+	
+	
+	
 	
 	<context:component-scan base-package="co.kr.smart" />
 	
