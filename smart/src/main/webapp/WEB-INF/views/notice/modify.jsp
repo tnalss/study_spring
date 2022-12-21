@@ -8,18 +8,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="update.no" method="post">
-	<input type="hidden" name="id" value="${vo.id}"/>
-		<table>
+
+	<h3>공지글 수정</h3>
+	<form method='post' action='update.no'>
+	<input type="hidden" name="id" value="${vo.id }" />
+		<table class='w-px1200'>
 			<tr>
-				<th>제목</th>
-				<td><input type="text" name="title" value="${vo.title} "/></td>
+				<th class='w-px140'>제목</th>
+				<td><input type='text' name='title' class='full'
+					value='${vo.title}'></td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td>
-				<textarea name="content">${vo.content}</textarea>
-				</td>
+				<td><textarea name='content' class='full'  style='height:400px'>${vo.content}</textarea></td>
 			</tr>
 		</table>
 	</form>

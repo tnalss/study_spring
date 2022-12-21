@@ -140,7 +140,10 @@ div.invalid { color: #ff0000; font-size: 14px; font-weight: bold; }
 	border-radius: 50%;
 
 }
+textarea:focus{outline: none; border: 1px solid #3367d6; font-size: 16px}
 textarea{
-	resize: none;
+	height: 30px;
 	padding: 0 10px;
+	font-size: 16px; 
+	border: 1px solid #b0b0b0;
 }

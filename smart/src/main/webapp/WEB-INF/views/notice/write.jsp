@@ -8,17 +8,30 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="insert.no" method="post">
+<h3>공지글등록</h3>
+	<form action="insert.no" method="post" enctype='multipart/form-data'>
+	<input type="hidden" name='writer' value='${loginInfo.userid}'/>
 		<table class='w-px1200'>
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="title" class='full' /></td>
+				<td><input type="text" name="title" class='full chk' title="제목" /></td>
 			</tr>
 			<tr>
 				<th>내용</th>
 				<td>
-				<textarea name="content"  class='full'></textarea>
+				<textarea name="content"  class='full chk' title="내용" ></textarea>
 				</td>
+			</tr>
+			<tr>
+			<th>첨부파일</th>
+			<td class='text-left'><label >
+			<input type="file" name="file" id="attach-file" />
+			<a >	<i class="fa-solid fa-file-arrow-up"></i>	</a>
+			</label>
+			<span id='file-name'></span>
+			<span id="preview"></span>
+			<a id="delete-file"> <i class="fa-solid fa-trash-can"></i> </a>
+			</td>
 			</tr>
 		</table>
 	</form>
@@ -28,9 +41,21 @@
 	</div>
 
 <script>
-$('save').click(function(){
-	$('form').submit();
+
+
+
+$('.save').click(function(){
+	
+	if ( emptyCheck() ) {
+	
+		$('form').submit();
+	}
 })
+
+
+
+
+
 </script>
 </body>
 </html>

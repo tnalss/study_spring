@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 public class NoticeServiceimpl implements NoticeService {
 
 	private NoticeDAO dao;
-	private int cnt =0;
+	
 	public NoticeServiceimpl(NoticeDAO dao) {
 		this.dao = dao;
 	}
 	@Override
 	public int notice_insert(NoticeVO vo) {
-		cnt = dao.notice_insert(vo);
-		return cnt;
+	
+		return  dao.notice_insert(vo);
 	}
 
 	@Override
@@ -31,19 +31,19 @@ public class NoticeServiceimpl implements NoticeService {
 
 	@Override
 	public int notice_update(NoticeVO vo) {
-		cnt = dao.notice_update(vo);
-		return cnt;
+		
+		return dao.notice_update(vo);
 	}
 
 	@Override
 	public int notice_delete(int id) {
-		cnt = dao.notice_delete(id);
-		return cnt;
+		
+		return dao.notice_delete(id);
 	}
 	@Override
 	public int notice_readcnt_update(int id) {
-		cnt = dao.notice_readcnt_update(id);
-		return cnt;
+
+		return dao.notice_readcnt_update(id);
 	}
 	
 

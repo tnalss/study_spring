@@ -171,11 +171,11 @@ public class CommonService {
 		
 		
 		mail.setHostName("smtp.naver.com"); // 이메일 서버 지정
-		mail.setAuthentication("it-study", "It-Study1!");  // 관리자 이메일주소 ,비번
+		mail.setAuthentication("itstudydev", "Itstudy10102");  // 관리자 이메일주소 ,비번
 		mail.setSSLOnConnect(true);
 		
 		try {
-			mail.setFrom("it-study@naver.com","관리자"); // 전송자 이메일 주소와 전송자 이름
+			mail.setFrom("itstudydev@naver.com","관리자"); // 전송자 이메일 주소와 전송자 이름
 			mail.addTo(vo.getEmail(),vo.getName());
 			mail.setSubject("임시비밀번호입니다.");
 			

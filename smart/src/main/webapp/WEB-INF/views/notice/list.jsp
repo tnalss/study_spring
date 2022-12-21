@@ -23,20 +23,21 @@
 
 <tr>
 	<th width='100px'>번호</th>
-	<th width='200x'>제목</th>
+	<th width='300x'>제목</th>
 	<th width='140px'>작성자</th>
 	<th width='160px'>작성일</th>
 	<th>조회수</th>
+	<th>첨부파일</th>
 </tr>
 
 <c:forEach var='i' items='${ list }'>
 
 
 <tr>
-	<td>${i.id }</td>
+	<td>${i.no }</td>
 	
 	
-	<td>
+	<td class='text-left'>
 	<a href="info.no?id=${i.id}">
 	${i.title}</a></td>
 	
@@ -44,6 +45,7 @@
 	<td>${i.name}</td>
 	<td>${i.writedate}</td>
 	<td>${i.readcnt}</td>
+	<td><c:if test='${!empty i.filename}'><i class="font-c fa-solid fa-paperclip"></i></c:if></td>
 </tr>
 
 </c:forEach>
