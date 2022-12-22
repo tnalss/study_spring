@@ -27,8 +27,9 @@ values (#{title},#{content},#{writer}, #{filename,jdbcType=VARCHAR}, #{filepath,
 
 <update id="notice_update">
 
-update notice set title = #{title},content = #{content}
- where id = #{id}
+UPDATE notice SET title = #{title},content = #{content}
+,filename=#{filename,jdbcType=VARCHAR} , filepath = #{filepath,jdbcType=VARCHAR}
+WHERE id = #{id}
 
 
 </update>

@@ -24,13 +24,14 @@
 			</tr>
 			<tr>
 			<th>첨부파일</th>
-			<td class='text-left'><label >
+			<td class='text-left'>
+			<div class='align'><label >
 			<input type="file" name="file" id="attach-file" />
 			<a >	<i class="fa-solid fa-file-arrow-up"></i>	</a>
 			</label>
-			<span id='file-name'></span>
+			<span id='file-name'>${vo.filename }</span>
 			<span id="preview"></span>
-			<a id="delete-file"> <i class="fa-solid fa-trash-can"></i> </a>
+			<a id="delete-file"> <i class="fa-solid fa-trash-can"></i> </a></div>
 			</td>
 			</tr>
 		</table>

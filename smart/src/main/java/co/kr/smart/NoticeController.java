@@ -1,5 +1,7 @@
 package co.kr.smart;
 
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -105,14 +107,62 @@ public class NoticeController {
 	}
 
 	@RequestMapping("/update.no")
-	public String update (NoticeVO vo) {
+	public String update (NoticeVO vo ,MultipartFile file
+			,HttpServletRequest request) {
+		
+		//수정전 공지글 정보 조회
+		NoticeVO before = service.notice_info(vo.getId());	
+		
+		
+		//파일을 첨부하는 경우 : 원래없는데 새로 첨부, 원래 있는데 수정 첨부
+		if( ! file.isEmpty() ) {
+			vo.setFilename( file.getOriginalFilename() );
+			vo.setFilepath( common.fileUplaod("notice", file, request) );
+			//sql문도 수정필요
+			//수정전 첨부되어있는 파일이 있으면 물리적 파일도 삭제
+			fileDelete( before.getFilepath() , request );
+			
+		} else {
+		//파일을 첨부하지 않는 경우
+			//원래있어서 그대로 두는 경우(원래없는데 첨부하는 경우와 동일), 원래 있었지만 지우는 경우
+			
+			//jquery이용, input hidden이용 filename파라미터 값을 받아 데이터객체에 담겨있음
+			if( vo.getFilename().isEmpty() ) {
+				//원래 O -> 삭제 
+				fileDelete( before.getFilepath() , request );
+			} else {
+				//원래 O 그대로 두는 경우
+				vo.setFilename(before.getFilename());
+				vo.setFilepath(before.getFilepath());
+			}
+		}
 		service.notice_update(vo);
 		return "redirect:info.no?id="+vo.getId();
 	}
 	
+	
+	//첨부파일 삭제 메소드
+	private void fileDelete(String filepath, HttpServletRequest request) {
+		if( filepath != null ) {
+			//db
+			//실제
+			filepath = filepath.replace(common.appURL(request), "d://app"+request.getContextPath());
+			
+			File file = new File( filepath );
+			if (file.exists()) file.delete();
+			
+		}
+	}
+	
 	@RequestMapping("/delete.no")
-	public String delete (int id) {
+	public String delete (int id, HttpServletRequest request) {
+		
+		NoticeVO vo = service.notice_info(id);
+		
 		service.notice_delete(id);
+		
+		fileDelete(vo.getFilepath(),request);
+		
 		return "redirect:list.no";
 	}
 	

@@ -224,6 +224,8 @@ public class CommonService {
 		//첨부파일을 다운로드하는 것임을 지정
 		response.setHeader("content-disposition", "attachment; filename="+
 				URLEncoder.encode(filename,"utf-8"));
+		// 한글 첨부파일명의 경우 URLEncoder.encode를 이용해 utf-8로 인코딩해주어야한다!@#!@#!@#!@
+		
 		
 		//PrintWriter는 문자만 내보냄...
 		//바이너리 데이터를 쓰기작업할 스트림이 필요 !! = > OutputStream

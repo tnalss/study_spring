@@ -147,3 +147,5 @@ textarea{
 	font-size: 16px; 
 	border: 1px solid #b0b0b0;
 }
+div.align{display:flex; align-items: center;}
+div.align>*{margin-right:15px;}
