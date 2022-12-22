@@ -1,12 +1,14 @@
 package co.kr.smart;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import common.CommonService;
@@ -21,6 +23,30 @@ public class NoticeController {
 		this.service = notice;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/download.no")
+	public String download(int id,String url, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		NoticeVO vo = service.notice_info(id);
+		//다운로드 메소드는 공통으로 뺀다.
+		boolean download = common.fileDownload(vo.getFilename(), vo.getFilepath(), request, response);
+		//Exception을 던지는 메소드로 만들었었음.
+		//또 그냥 던져봄
+		
+		if(!download) {
+			//첨부된 파일이 실제 물리적으로 존재하지 않는 경우
+			StringBuffer msg = new StringBuffer("<script>");
+			msg.append("alert('다운로드할 파일이 없습니다!'); location='");
+			msg.append(url).append("'");
+			//info에서 url도 jquery를 이용해서 보내주었음.
+			
+			msg.append("</script>");
+		
+			return msg.toString();
+		} else
+			
+			return null;
+		
+	}
 	@RequestMapping("/list.no")
 	public String list(HttpSession session , Model model) {
 		// 세션에 카테고리 담음.

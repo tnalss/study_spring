@@ -69,9 +69,9 @@ $('.btn-delete').on('click',function(){
 }); */
 
 $('#download').on('click',function(){
-	$(this).attr('href','download.no?id=${vo.id}');
+	$(this).attr('href','download.no?id=${vo.id}&url='+$(location).attr('href'));
 })
-
+//$(location).attr('href') 현재주소도 파라미터로 넘겨줌
 </script>
 
 </body>

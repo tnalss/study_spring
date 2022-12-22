@@ -2,6 +2,7 @@ package common;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -13,11 +14,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import member.MemberVO;
@@ -199,6 +203,41 @@ public class CommonService {
 		}
 		
 		return send;
+	}
+	//첨부파일 다운로드
+	public boolean fileDownload(String filename, String filepath,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		//DB:  http://localhost/smart/upload/myinfo/2022/12/20/afdlj_abc.png
+		//실제: d://app/smart/upload/myinfo/2022/12/20/afdlj_abc.png 
+		filepath = 
+		filepath.replace(appURL(request), "d://app/"+request.getContextPath());
+		//filepath는 이제 실제 위치임.
+		File file = new File(filepath);
+		if(!file.exists()) return false;
+		
+	  //파일 형태는 마임매핑에서 마임타입을 뽑아내야하는데...? -> 서버가 알아서 판단
+		String mime = request.getSession().getServletContext().getMimeType(filename);
+		response.setContentType( mime );
+		
+		//첨부파일을 다운로드하는 것임을 지정
+		response.setHeader("content-disposition", "attachment; filename="+filename);
+		
+		//PrintWriter는 문자만 내보냄...
+		//바이너리 데이터를 쓰기작업할 스트림이 필요 !! = > OutputStream
+		
+		//     IO : byte( inputStream /outputStream) , character(reader/writer)
+		//File IO : fileinputStream/ fileoutputStream , Filereader/filewriter
+		// 위아래 맞춰서 생각
+		
+		ServletOutputStream out = response.getOutputStream();
+		//Exception 던지기로 한번 해봄.
+		//파일정보를 읽어들여 저장해주는 처리
+		FileCopyUtils.copy( new FileInputStream(file)  , out );
+		out.flush();
+		
+		
+		return true;
 	}
 	
 }
