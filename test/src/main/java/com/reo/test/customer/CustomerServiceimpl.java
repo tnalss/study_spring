@@ -33,4 +33,9 @@ public class CustomerServiceimpl implements CustomerService {
 
 	}
 
+	@Override
+	public CustomerVO customer_info(int id) {
+		return dao.customer_info(id);
+	}
+
 }

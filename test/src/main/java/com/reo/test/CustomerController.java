@@ -23,4 +23,11 @@ public class CustomerController {
 		model.addAttribute("list",list);
 		return "customer/list";
 	}
+	
+	@RequestMapping("/info.cu")
+	public String customer_info(int id, Model model) {
+		CustomerVO vo = customer.customer_info(id);
+		model.addAttribute("vo",vo);
+		return "customer/info";
+	}
 }

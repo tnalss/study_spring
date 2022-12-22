@@ -9,4 +9,7 @@ public interface CustomerService {
 	List<CustomerVO> customer_list();
 	void customer_update(CustomerVO vo);
 	void customer_delete(int id);
+	
+	CustomerVO customer_info(int id);
+	
 }

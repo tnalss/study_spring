@@ -5,4 +5,10 @@
 	<select id="list" resultType="com.reo.test.customer.CustomerVO">
 		select * from customer
 	</select>
+	
+	<select id="info" resultType="com.reo.test.customer.CustomerVO">
+		select * from customer where id = #{id}
+	</select>
+	
+	
 </mapper>
