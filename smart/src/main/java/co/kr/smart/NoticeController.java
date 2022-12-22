@@ -24,7 +24,7 @@ public class NoticeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/download.no")
+	@RequestMapping(value="/download.no",produces="text/html; charset=utf-8")
 	public String download(int id,String url, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		NoticeVO vo = service.notice_info(id);
 		//다운로드 메소드는 공통으로 뺀다.

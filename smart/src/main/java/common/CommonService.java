@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -221,7 +222,8 @@ public class CommonService {
 		response.setContentType( mime );
 		
 		//첨부파일을 다운로드하는 것임을 지정
-		response.setHeader("content-disposition", "attachment; filename="+filename);
+		response.setHeader("content-disposition", "attachment; filename="+
+				URLEncoder.encode(filename,"utf-8"));
 		
 		//PrintWriter는 문자만 내보냄...
 		//바이너리 데이터를 쓰기작업할 스트림이 필요 !! = > OutputStream
