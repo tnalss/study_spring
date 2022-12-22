@@ -49,6 +49,23 @@ public class NoticeDAO implements NoticeService {
 		return sql.update("notice.notice_readcnt_update",id);
 	}
 
+
+	@Override
+	public NoticePageVO notice_list(NoticePageVO page) {
+		//총 페이지 수를 위한 쿼리 날림
+		page.setTotalList( sql.selectOne("notice.count") );
+		//매퍼 쿼리작성
+		//pageVO에서 계산처리가 완료되었음.
+		
+		// 현재 페이지에 출력할 10건의 공지글 조회
+		page.setList( sql.selectList("notice.list",page) ) ;
+		//쿼리문 작성을 위해 매퍼로 ㄱㄱ
+		//페이지에 10건의 정보를 담고 page를 반환
+		//컨트롤러로 다시 ㄱㄱ
+		
+		return page;
+	}
+
 	
 	
 

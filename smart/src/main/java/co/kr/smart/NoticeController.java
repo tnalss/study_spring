@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import common.CommonService;
+import notice.NoticePageVO;
 import notice.NoticeService;
 import notice.NoticeVO;
 
@@ -49,14 +50,25 @@ public class NoticeController {
 			return null;
 		
 	}
+	
+	
+	//페이지 처리를 위해 NoticePageVO 값을 파라미터로 받아옴.
+	// 처음에 들어온 경우 페이지 정보를 줌
 	@RequestMapping("/list.no")
-	public String list(HttpSession session , Model model) {
+	public String list(HttpSession session , Model model, NoticePageVO page) {
 		// 세션에 카테고리 담음.
 		session.setAttribute("category","no");
 		
 		// 비지니스 로직 - db에서 공지글목록을 조회
 		// model에 attribute로 담는다.
 		model.addAttribute("list",service.notice_list());
+		
+		
+		//1페이지라고 알ㄹ랴줌
+		page.setCurPage(1);
+		model.addAttribute("page", service.notice_list(page));
+		//응답화면에서 page속의 값을 출력할 수 있도록 변경!
+		
 		//응답화면 연결
 		return "notice/list";
 	}

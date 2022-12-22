@@ -30,7 +30,7 @@
 	<th>첨부파일</th>
 </tr>
 
-<c:forEach var='i' items='${ list }'>
+<c:forEach var='i' items='${ page.list }'>
 
 
 <tr>
