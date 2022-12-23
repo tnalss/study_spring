@@ -32,9 +32,9 @@ public class CustomerDAO implements CustomerService {
 
 	@Override
 	public void customer_delete(int id) {
-		// TODO Auto-generated method stub
-
+		sql.delete("customer.delete",id);
 	}
+	
 	@Override
 	public CustomerVO customer_info(int id) {
 		return sql.selectOne("customer.info",id);

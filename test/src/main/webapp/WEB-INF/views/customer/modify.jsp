@@ -23,6 +23,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/common.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -34,12 +35,37 @@
 			<jsp:include page="/WEB-INF/views/include/topnav.jsp"/>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <h1 class="mt-4">홈페이지</h1>
+                    <h2>${vo.name}님의 정보 수정</h2>
+				<form action="update.cu" method="post">
+							<table class="table">
+						<tbody>
+							<tr>
+								<th scope="col">이름</th>
+								<td><input type="text" name="name" value="${vo.name}" /></td>
+							</tr>
+							<tr>
+								<th scope="col">성별</th>
+								<td>${vo.gender}</td>
+							</tr>
+							<tr>
+								<th scope="col">이메일</th>
+								<td><input type="text" name="email" value="${vo.email}" /></td>
+							</tr>
+							<tr>
+								<th scope="col">전화번호</th>
+								<td><input type="text" name="phone" value="${vo.phone}" /></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+                    
+                    
+                    
                     
                 </div>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+        
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->

@@ -10,5 +10,8 @@
 		select * from customer where id = #{id}
 	</select>
 	
+	<delete id="delete">
+		DELETE customer where id = #{id}
+	</delete>
 	
 </mapper>
