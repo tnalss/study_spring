@@ -18,8 +18,8 @@ public class PageVO {
 	private int totalBlock;
 	
 	
-	//현재 페이지 번호
-	private int curPage;
+	//현재 페이지 번호// 초기페이지가 없으면 오류가 생기므로 1로 초기화를 시켜주었다!
+	private int curPage=1;
 	//각 페이지의 시작 목록 번호 현재 페이지 번호에 따라 계산
 	//각 페이지 끝 목록번호
 	private int beginList, endList;

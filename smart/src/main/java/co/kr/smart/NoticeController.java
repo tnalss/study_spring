@@ -64,8 +64,8 @@ public class NoticeController {
 		model.addAttribute("list",service.notice_list());
 		
 		
-		//1페이지라고 알ㄹ랴줌
-		page.setCurPage(1);
+		//1페이지라고 알ㄹ랴줌//list.jsp에서 페이지알려줬음
+		page.setCurPage(page.getCurPage());
 		model.addAttribute("page", service.notice_list(page));
 		//응답화면에서 page속의 값을 출력할 수 있도록 변경!
 		

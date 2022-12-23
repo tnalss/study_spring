@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import and.ExamVO;
 
 @RestController
-public class CustomerController {
+public class ExamController {
 
 	@RequestMapping(value = "/test1")
 	public void test1() {
