@@ -178,4 +178,20 @@ public class NoticeController {
 		return "redirect:list.no";
 	}
 	
+	
+	//답글쓰기 화면 요청
+	@RequestMapping("/reply.no")
+	public String reply(int id, Model model) {
+		//해당 글의 원글정보를 조회해와야함.
+		NoticeVO vo =  service.notice_info(id);
+		model.addAttribute("vo",vo);
+		return "notice/reply";
+	}
+	
+	@RequestMapping("/reply_insert.no")
+	public String reply_insert(NoticeVO vo) {
+		service.notice_reply_insert(vo);
+		return "redirect:list.no";
+	}
+	
 }

@@ -48,6 +48,10 @@ table td{text-align: center;}
 	<a class='btn-fill' href='modify.no?id=${vo.id}'>글수정</a>
 	<a class='btn-fill btn-delete'>글삭제</a>
 	</c:if>
+	<!-- 로그인했으면 답글 쓰기 가능! -->
+	<c:if test='${not empty loginInfo}'>
+	<a href='reply.no?id=${vo.id}' class="btn-fill">답글쓰기</a>
+	 </c:if>
 </div>
 
 

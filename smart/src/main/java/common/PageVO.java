@@ -5,6 +5,20 @@ import lombok.Setter;
 
 @Getter @Setter
 public class PageVO {
+	
+	
+	
+	//검색관련 필드
+	private String search,keyword;
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//페이지당 보여질 목록의 수
 	private int pageList = 10;
 	//블럭당 보여질 페이지의수 
