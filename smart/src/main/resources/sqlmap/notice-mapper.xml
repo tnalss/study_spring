@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="notice">
 
+<!-- root와 step을 이용해서 답글 조회 방식 변경 -->
 <!-- notice 목록 -->
 <select id='notice_list' resultType='notice.NoticeVO'>
 select row_number() over(order by n.id) no, n.*, name
@@ -46,21 +47,75 @@ where id = #{id}
 </update>
 
 
-<!-- 페이징 처리를 위한 전체 건수 조회 -->
-<select id="count" resultType="integer">
-select count(*) from notice
-</select>
 
 <!-- 페이징 처리 중 조회 원래는 그냥 list로 같이 썼으나 학습을 위해 두개로 나눔 -->
 
 <select id='list' resultType='notice.NoticeVO'>
 select * 
-from (select row_number() over(order by n.id) no, n.*, name
-      from notice n left join member m on n.writer=m.userid)
+from (select row_number() over(order by n.root, step desc) no, n.*, name
+      from notice n left join member m on n.writer=m.userid
+      <include refid="where_search"/>)
 where no between #{beginList} and #{endList} 
 order by no desc
 </select>
 
+<!-- 공지글 답글 신규저장 -->
+<!-- 원글의 root와 같고 step이 원글의 step보다 큰글은 먼저 step +1을 해주어야한다. -->
+<!-- 하지만 두 명령문을 한번에 실행할 수가 없음. -->
+<!-- 프로그램으로 만들어줌 -->
+<!-- <나 >때문에 실행이 안됨 -->
+<!--  쿼리문간 구별을 위해 ; 를 붙여줌!! ##################-->
+<!-- CDATA를 이용해 전체를 문자로 만들어줌. -->
+<insert id="reply_insert">
+
+<![CDATA[
+{
+CALL declare
+BEGIN
+
+	UPDATE notice SET step = step + 1
+	WHERE root = #{root} and step > #{step};
+
+	INSERT INTO notice (title,content,writer,filename,filepath,
+	root, step, indent)
+	VALUES (#{title},#{content},#{writer}, #{filename,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR},
+	#{root},#{step}+1,#{indent}+1);
+
+END
+}]]>
+</insert>
+
+
+<!-- 검색조건 -->
+<!-- search부분이 ${} 인점을 생각하자 search안의 글자를 받아오려면 ${}로 묶어준다. -->
+<sql id="where_search">
+	<choose>
+	<when test='search=="tandc"'>
+	WHERE title  LIKE '%' || #{keyword} || '%'
+		or content  LIKE '%' || #{keyword} || '%'
+	
+	</when>
+		<when test='search=="all"'>
+		WHERE title  LIKE '%' || #{keyword} || '%'
+		or content  LIKE '%' || #{keyword} || '%'
+		or writer in (SELECT userid from member where name LIKE '%' || #{keyword} || '%')
+		</when>
+		<when test='search=="title" or search=="content"'>
+		WHERE ${search} LIKE '%' || #{keyword} || '%'
+		</when>
+		
+		<when test='search=="writer"'>
+		WHERE writer in (SELECT userid from member where name LIKE '%' || #{keyword} || '%' )
+		</when>
+		
+	</choose>
+	
+</sql>
+
+<!-- 페이징 처리를 위한 전체 건수 조회 -->
+<select id="count" resultType="integer">
+select count(*) from notice <include refid="where_search"/>
+</select>
 
 
 </mapper>

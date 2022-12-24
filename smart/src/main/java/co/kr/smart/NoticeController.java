@@ -64,8 +64,8 @@ public class NoticeController {
 		model.addAttribute("list",service.notice_list());
 		
 		
-		//1페이지라고 알ㄹ랴줌
-		page.setCurPage(1);
+		//1페이지라고 알ㄹ랴줌//list.jsp에서 페이지알려줬음
+		page.setCurPage(page.getCurPage());
 		model.addAttribute("page", service.notice_list(page));
 		//응답화면에서 page속의 값을 출력할 수 있도록 변경!
 		
@@ -175,6 +175,22 @@ public class NoticeController {
 		
 		fileDelete(vo.getFilepath(),request);
 		
+		return "redirect:list.no";
+	}
+	
+	
+	//답글쓰기 화면 요청
+	@RequestMapping("/reply.no")
+	public String reply(int id, Model model) {
+		//해당 글의 원글정보를 조회해와야함.
+		NoticeVO vo =  service.notice_info(id);
+		model.addAttribute("vo",vo);
+		return "notice/reply";
+	}
+	
+	@RequestMapping("/reply_insert.no")
+	public String reply_insert(NoticeVO vo) {
+		service.notice_reply_insert(vo);
 		return "redirect:list.no";
 	}
 	

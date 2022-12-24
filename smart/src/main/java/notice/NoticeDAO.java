@@ -53,7 +53,9 @@ public class NoticeDAO implements NoticeService {
 	@Override
 	public NoticePageVO notice_list(NoticePageVO page) {
 		//총 페이지 수를 위한 쿼리 날림
-		page.setTotalList( sql.selectOne("notice.count") );
+		
+		//검색할수있또록 page도 같이 날려줌
+		page.setTotalList( sql.selectOne("notice.count",page) );
 		//매퍼 쿼리작성
 		//pageVO에서 계산처리가 완료되었음.
 		
@@ -64,6 +66,13 @@ public class NoticeDAO implements NoticeService {
 		//컨트롤러로 다시 ㄱㄱ
 		
 		return page;
+	}
+
+
+	@Override
+	public int notice_reply_insert(NoticeVO vo) {
+		
+		return sql.insert("notice.reply_insert",vo);
 	}
 
 	

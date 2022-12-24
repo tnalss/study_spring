@@ -149,3 +149,19 @@ textarea{
 }
 div.align{display:flex; align-items: center;}
 div.align>*{margin-right:15px;}
+
+.page-list{
+	display:flex; justify-content: center; line-height: 36px; margin:10px auto;
+}
+.page-list a, .page-list span{
+	width:36px;
+	height:38px;
+	margin: 1px;
+	border:1px solid transparent;
+}
+.page-list span{
+	border:1px solid #3367d6; color:#3367d6;
+}
+.page-list a:hover{
+	background-color: rgba(51,103,214,0.1); color:#3367d6;
+} 
