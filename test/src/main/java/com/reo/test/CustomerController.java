@@ -42,8 +42,15 @@ public class CustomerController {
 	@RequestMapping("/modify.cu")
 	public String customer_modify(int id, Model model) {
 		CustomerVO vo = customer.customer_info(id);
-		model.addAttribute(vo);
+		model.addAttribute("vo",vo);
 		
 		return "customer/modify";
+	}
+	
+	
+	@RequestMapping("/update.cu")
+	public String customer_update(CustomerVO vo) {
+		customer.customer_update(vo);
+		return "redirect:info.cu?id="+vo.getId();
 	}
 }

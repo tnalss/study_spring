@@ -26,8 +26,7 @@ public class CustomerDAO implements CustomerService {
 
 	@Override
 	public void customer_update(CustomerVO vo) {
-		// TODO Auto-generated method stub
-
+		sql.update("customer.update",vo);
 	}
 
 	@Override

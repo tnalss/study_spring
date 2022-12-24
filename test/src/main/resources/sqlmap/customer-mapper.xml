@@ -14,4 +14,11 @@
 		DELETE customer where id = #{id}
 	</delete>
 	
+	<update id="update">
+		Update customer
+		SET name = #{name}, gender=#{gender},
+				email=#{email,jdbcType=VARCHAR},phone=#{phone,jdbcType=VARCHAR}
+		WHERE id = #{id}
+	</update>
+	
 </mapper>

@@ -24,6 +24,8 @@
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/common.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+ <script src="js/common.js"></script>
+        
     </head>
     <body>
         <div class="d-flex" id="wrapper">
@@ -37,15 +39,28 @@
                 <div class="container-fluid">
                     <h2>${vo.name}님의 정보 수정</h2>
 				<form action="update.cu" method="post">
+						<input type="hidden" name="id" value="${vo.id}" />
 							<table class="table">
 						<tbody>
 							<tr>
 								<th scope="col">이름</th>
-								<td><input type="text" name="name" value="${vo.name}" /></td>
+								<td><input type="text" name="name" 
+								class="chk" title="이름" value="${vo.name}" /></td>
+								
 							</tr>
 							<tr>
 								<th scope="col">성별</th>
-								<td>${vo.gender}</td>
+								<td>
+								
+								<label>
+								<input type="radio" value="남" name="gender"
+								  ${vo.gender eq '남' ? 'checked':''}/>남</label>
+								<label>
+								<input type="radio" value="여" name="gender"
+								  ${vo.gender eq '여' ? 'checked':''}/>여</label>
+								
+							
+								</td>
 							</tr>
 							<tr>
 								<th scope="col">이메일</th>
@@ -58,14 +73,21 @@
 						</tbody>
 					</table>
 				</form>
-                    
-                    
-                    
-                    
+				<button type="button" class="btn btn-primary modify"
+					>수정</button>
+				<button type="button" class="btn btn-secondary"
+					onclick="history.go(-1)">취소</button>
+
                 </div>
             </div>
         </div>
+        <script> 
+        $('.modify').click(function(){
+        	if(emptyCheck())
+        		$('form').submit();
+        });
         
+        </script>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
