@@ -39,10 +39,13 @@
 				<table class="table">
 					<tbody>
 						<tr>
+							<th scope="col">이름</th>
+							<td><input type="text" name="first_name" value="${vo.first_name}"/></td>
+							
 							<th scope="col">성</th>
-							<td>
-							<input type="text" name="last_name" value="${vo.name}"/>
-							</td>
+							<td><input type="text" name="last_name" value="${vo.last_name}"/></td>
+							
+						
 						</tr>
 					
 						<tr>
