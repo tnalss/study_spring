@@ -37,44 +37,39 @@
 			<jsp:include page="/WEB-INF/views/include/topnav.jsp"/>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <h2>${vo.name}님의 정보 수정</h2>
-				<form action="update.cu" method="post">
-						<input type="hidden" name="id" value="${vo.id}" />
-							<table class="table">
+                    <h2>신규 고객 등록</h2>
+				<form action="insert.cu" method="post">
+						<table class="table">
 						<tbody>
 							<tr>
 								<th scope="col">이름</th>
 								<td><input type="text" name="name" 
-								class="chk" title="이름" value="${vo.name}" /></td>
-								
+								class="chk" title="이름"  /></td>
 							</tr>
 							<tr>
 								<th scope="col">성별</th>
 								<td>
-								
 								<label>
 								<input type="radio" value="남" name="gender"
-								  ${vo.gender eq '남' ? 'checked':''}/>남</label>
+								  checked/>남</label>
 								<label>
-								<input type="radio" value="여" name="gender"
-								  ${vo.gender eq '여' ? 'checked':''}/>여</label>
-								
-							
+								<input type="radio" value="여" name="gender"/>
+								여</label>								
 								</td>
 							</tr>
 							<tr>
 								<th scope="col">이메일</th>
-								<td><input type="text" name="email" value="${vo.email}" /></td>
+								<td><input type="text" name="email"  /></td>
 							</tr>
 							<tr>
 								<th scope="col">전화번호</th>
-								<td><input type="text" name="phone" value="${vo.phone}" /></td>
+								<td><input type="text" name="phone" /></td>
 							</tr>
 						</tbody>
 					</table>
 				</form>
-				<button type="button" class="btn btn-primary modify"
-					>수정</button>
+				<button type="button" class="btn btn-primary cu-insert"
+					>등록</button>
 				<button type="button" class="btn btn-secondary"
 					onclick="history.go(-1)">취소</button>
 
@@ -82,7 +77,7 @@
             </div>
         </div>
         <script> 
-        $('.modify').click(function(){
+        $('.cu-insert').click(function(){
         	if(tagIsInvalid($('[name=email]'))) return;
         	
         	if(emptyCheck())
@@ -108,7 +103,7 @@
 		function tagIsInvalid( tag ){
 			var status = member.tag_status(tag);
 			if (status.code == 'invalid'){
-				alert('수정 불가!\n'+ status.desc);
+				alert('등록 불가!\n'+ status.desc);
 				tag.focus();
 				return true;
 			}else{

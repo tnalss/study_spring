@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hr">
+
+<select id="emp_list" resultType="hr.EmployeeVO">
+	select * from employees
+</select>
+
+<select id="emp_info" resultType="hr.EmployeeVO">
+	SELECT e.first_name||' '||e.last_name name, e.*,
+	   d.department_name,
+	   j.job_title,m.first_name||' '||m.last_name manager_name
+	FROM employees e LEFT JOIN departments d
+	ON e.department_id=d.department_id
+	INNER JOIN jobs j
+	ON e.job_id = j.job_id
+	LEFT JOIN employees m
+	ON e.manager_id=m.employee_id
+	WHERE e.employee_id = #{employee_id}
+</select>
+
+<delete id="emp_delete">
+	DELETE employees
+	WHERE employee_id = #{employee_id}
+</delete>
+
+</mapper>

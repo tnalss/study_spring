@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ page session="false"%>
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
@@ -32,12 +32,12 @@
 	</c:when>
 </c:choose>
 <title>스프링연습 ${title}</title>
+
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
 <link href="css/common.css" rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 </head>
 <body>
 	<div class="d-flex" id="wrapper">
@@ -49,49 +49,33 @@
 			<jsp:include page="/WEB-INF/views/include/topnav.jsp" />
 			<!-- Page content-->
 			<div class="container-fluid">
-				<h2>${vo.name}님의 상세 정보</h2>
 				<table class="table">
-					<tbody>
+					<thead class="thead-dark">
 						<tr>
+							<th scope="col">#</th>
+							<th scope="col">사원번호</th>
 							<th scope="col">이름</th>
-							<td>${vo.name}</td>
-						</tr>
-						<tr>
-							<th scope="col">성별</th>
-							<td>${vo.gender}</td>
-						</tr>
-						<tr>
+							<th scope="col">성</th>
 							<th scope="col">이메일</th>
-							<td>${vo.email}</td>
 						</tr>
-						<tr>
-							<th scope="col">전화번호</th>
-							<td>${vo.phone }</td>
-						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var='vo' items="${list}">
+							<tr>
+								<th scope="row"></th>
+								<td>${vo.employee_id}</td>
+								<td><a href="info.hr?id=${vo.employee_id}">
+								${vo.first_name}</a></td>
+								<td>${vo.last_name}</td>
+								<td>${vo.email}</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
-				<button type="button" class="btn btn-secondary"
-					onclick="history.go(-1)">이전으로</button>
-				<button type="button" class="btn btn-primary"
-					onclick="location='modify.cu?id=${vo.id}'">수정</button>
-				<button type="button" class="btn btn-danger cu-delete">삭제</button>
 			</div>
 		</div>
 	</div>
-	<script>
-	
-	
-		$('.cu-delete').click(function() {
-			if (confirm('[${vo.name}] 정말 삭제?')) {
-				location = 'delete.cu?id=${vo.id}';
-			}
-		});
-		
-		
-		
-		
-	</script>
-
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 	<!-- Bootstrap core JS-->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -21,4 +21,10 @@
 		WHERE id = #{id}
 	</update>
 	
+	<insert id="insert">
+		INSERT INTO customer (name, gender,email,phone )
+		VALUES (#{name},#{gender},#{email},#{phone,jdbcType=VARCHAR})
+	
+	</insert>
+	
 </mapper>

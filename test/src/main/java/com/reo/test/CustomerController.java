@@ -53,4 +53,15 @@ public class CustomerController {
 		customer.customer_update(vo);
 		return "redirect:info.cu?id="+vo.getId();
 	}
+	
+	@RequestMapping("/new.cu")
+	public String customer_new() {
+		return "customer/new";
+	}
+	
+	@RequestMapping("/insert.cu")
+	public String customer_insert(CustomerVO vo) {
+		customer.customer_insert(vo);
+		return "redirect:list.cu";
+	}
 }

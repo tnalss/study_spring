@@ -3,19 +3,22 @@ package com.reo.test.customer;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository 
 public class CustomerDAO implements CustomerService {
 	
+	
 	private SqlSession sql;
-	CustomerDAO(SqlSession sql){
+	public CustomerDAO(@Qualifier("maroo") SqlSession sql){
 		this.sql = sql;
 	}
+	
+	
 	@Override
 	public void customer_insert(CustomerVO vo) {
-		// TODO Auto-generated method stub
-
+		sql.insert("customer.insert",vo);
 	}
 
 	@Override

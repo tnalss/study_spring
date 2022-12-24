@@ -11,8 +11,7 @@ public class CustomerServiceimpl implements CustomerService {
 	
 	@Override
 	public void customer_insert(CustomerVO vo) {
-		// TODO Auto-generated method stub
-
+		dao.customer_insert(vo);
 	}
 
 	@Override

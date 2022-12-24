@@ -57,6 +57,8 @@
 						</c:forEach>
 					</tbody>
 				</table>
+				<button type="button" class="btn btn-primary"
+				 onclick="location='new.cu'">신규 고객 등록</button>
 
 			</div>
 		</div>
