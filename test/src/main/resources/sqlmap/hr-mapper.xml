@@ -3,7 +3,7 @@
 <mapper namespace="hr">
 
 <select id="emp_list" resultType="hr.EmployeeVO">
-	select * from employees
+	select * from employees ORDER BY 1
 </select>
 
 <select id="emp_info" resultType="hr.EmployeeVO">
@@ -23,5 +23,33 @@
 	DELETE employees
 	WHERE employee_id = #{employee_id}
 </delete>
+
+<update id="emp_update">
+	UPDATE employees
+	SET first_name=#{first_name},last_name=#{last_name},email=#{email},
+	phone_number=#{phone_number},hire_date=#{hire_date},salary=#{salary},
+	job_id=#{job_id},department_id=
+	<if test="department_id==-1">null </if>
+	<if test="department_id!=-1">#{department_id} </if>
+	WHERE employee_id=#{employee_id}
+</update>
+
+<select id="dept_list" resultType="hr.DepartmentVO">
+	SELECT * FROM departments ORDER BY department_name
+</select>
+
+<select id="job_list" resultType="hr.JobVO">
+	SELECT * FROM jobs ORDER BY job_title
+</select>
+
+<insert id="emp_insert">
+	INSERT INTO employees
+	(employee_id, first_name, last_name, email,
+	phone_number, hire_date,salary,job_id,department_id)
+	VALUES (employees_seq.nextval, #{first_name},#{last_name},#{email},
+	#{phone_number},#{hire_date},#{salary},#{job_id},
+	<if test="department_id==-1">null</if>
+	<if test="department_id!=-1">#{department_id}</if>)
+</insert>
 
 </mapper>

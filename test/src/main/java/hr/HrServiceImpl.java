@@ -28,14 +28,23 @@ public class HrServiceImpl implements HrService {
 
 	@Override
 	public void employee_update(EmployeeVO vo) {
-		// TODO Auto-generated method stub
+		dao.employee_update(vo);
 
 	}
 
 	@Override
 	public void employee_insert(EmployeeVO vo) {
-		// TODO Auto-generated method stub
+		dao.employee_insert(vo);
+	}
 
+	@Override
+	public List<DepartmentVO> department_list() {
+		return dao.department_list();
+	}
+
+	@Override
+	public List<JobVO> job_list() {
+		return dao.job_list();
 	}
 
 }

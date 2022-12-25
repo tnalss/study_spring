@@ -36,47 +36,39 @@
 			<jsp:include page="/WEB-INF/views/include/topnav.jsp"/>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <h2>${vo.name}사원의 정보 수정</h2>
-				<form action="update.hr" method="post">
+                    <h2>신규 사원 등록</h2>
+				<form action="insert.hr" method="post">
 					<table class="table">
 						<tbody>
-						<tr>
-						<th>사번</th>
-						<td>${vo.employee_id}
-						<input type="hidden" name="employee_id" value="${vo.employee_id}" />
-						</td>
-						</tr>
 							<tr>
 								<th scope="col">이름(이름 성)</th>
-								<td><input type="text" name="first_name" value="${vo.first_name}"/>
-								<input type="text" name="last_name" value="${vo.last_name}"/></td>
+								<td><input type="text" name="first_name"/>
+								<input type="text" name="last_name"/></td>
 							</tr>	
 							<tr>
 								<th scope="col">이메일</th>
-								<td><input type="text" name="email" value="${vo.email}" /></td>
+								<td><input type="text" name="email"/></td>
 							</tr>
 							<tr>
-
 							<tr>
 								<th scope="col">전화번호</th>
-								<td><input type="text" name="phone_number" value="${vo.phone_number}" /></td>
+								<td><input type="text" name="phone_number"/></td>
 							</tr>
 							
 							<tr>
 								<th scope="col">고용일</th>
-								<td><input type="date" name="hire_date" value="${vo.hire_date}" /></td>
+								<td><input type="date" name="hire_date"/></td>
 							</tr>
 							<tr>
 								<th scope="col">급여</th>
-								<td><input type="text" name="salary" value="${vo.salary}" /></td>
+								<td><input type="text" name="salary"/></td>
 							</tr>
 							<tr>
 								<th scope="col">업무명</th>
 								<td>
 								<select name="job_id" id="">
 								<c:forEach var="j" items="${jobs}">
-								<option value="${j.job_id}"
-									 ${vo.job_id eq j.job_id ? ' selected':''}>
+								<option value="${j.job_id}">
 								${j.job_title}</option>
 								</c:forEach>
 								</select>
@@ -88,18 +80,12 @@
 								<select name="department_id">
 								<option value='-1'>부서선택</option>
 								<c:forEach var="d" items="${departments}">
-								<option value="${d.department_id}"
-								${vo.department_id eq d.department_id ? ' selected':''}	>
+								<option value="${d.department_id}">
 								${d.department_name}</option>
 								</c:forEach>
 								</select>
 								</td>
 							</tr>
-							<tr>
-								<th scope="col">매니저명</th>
-								<td>${vo.manager_name}</td>
-							</tr>
-							
 						</tbody>
 					</table>
 				</form>

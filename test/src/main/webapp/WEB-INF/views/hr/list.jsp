@@ -49,6 +49,9 @@
 			<jsp:include page="/WEB-INF/views/include/topnav.jsp" />
 			<!-- Page content-->
 			<div class="container-fluid">
+			<button type="button" class="btn btn-primary"
+				 onclick="location='new.hr'">신규 사원 등록</button>
+			
 				<table class="table">
 					<thead class="thead-dark">
 						<tr>
