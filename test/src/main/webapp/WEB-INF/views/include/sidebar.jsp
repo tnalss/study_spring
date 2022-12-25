@@ -10,8 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 <script src="js/common.js"></script>
 <div class="border-end bg-white" id="sidebar-wrapper">
-	<div class="sidebar-heading border-bottom bg-light">Start
-		Bootstrap</div>
+	<div class="sidebar-heading border-bottom bg-light">스프링 연습</div>
 	<div class="list-group list-group-flush">
 		<a
 			class="${category eq 'cu' ?'selected':''} list-group-item list-group-item-action list-group-item-light p-3"
