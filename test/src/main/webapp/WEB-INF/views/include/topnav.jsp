@@ -13,16 +13,22 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+			<c:if test="${not empty loginInfo}"><li>${loginInfo.name}</li></c:if>
 				<li class="nav-item active"><a class="nav-link" href="<c:url value='/'/>"> Home</a></li>
-				<li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
 					role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">Dropdown</a>
+					aria-expanded="false">더보기</a>
 					<div class="dropdown-menu dropdown-menu-end"
 						aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#!">Action</a> <a
-							class="dropdown-item" href="#!">Another action</a>
+						<c:if test="${empty loginInfo}">
+						<a class="dropdown-item" href="<c:url value='/login.mb'/>"> 로그인</a>
+						<a class="dropdown-item" href="<c:url value='/join.mb'/>"> 회원가입</a>
+						</c:if>
+						<c:if test="${not empty loginInfo}">
+						<a class="dropdown-item" href="<c:url value='/change.mb'/>"> 비밀번호변경</a>
+						<a class="dropdown-item" href="<c:url value='/logout.mb'/>"> 로그아웃</a>
+						</c:if>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="#!">Something else here</a>
 					</div></li>
