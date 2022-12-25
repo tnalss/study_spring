@@ -36,4 +36,19 @@ public class MemberDAO implements MemberService {
 		return sql.selectOne("member.salt",userid);
 	}
 
+	@Override
+	public int member_idCheck(String userid) {
+		return sql.selectOne("member.idCheck",userid);
+	}
+
+	@Override
+	public void member_myInfo_update(MemberVO vo) {
+		sql.update("member.update",vo);
+	}
+
+	@Override
+	public void member_join(MemberVO vo) {
+		sql.insert("member.insert",vo);		
+	}
+
 }

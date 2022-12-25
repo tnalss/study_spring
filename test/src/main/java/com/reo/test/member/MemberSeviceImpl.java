@@ -30,6 +30,21 @@ public class MemberSeviceImpl implements MemberService {
 	public String member_salt(String userid) {
 		return dao.member_salt(userid);
 	}
+
+	@Override
+	public int member_idCheck(String userid) {
+		return dao.member_idCheck(userid);
+	}
+
+	@Override
+	public void member_myInfo_update(MemberVO vo) {
+		dao.member_myInfo_update(vo);
+	}
+
+	@Override
+	public void member_join(MemberVO vo) {
+		dao.member_join(vo);
+	}
 	
 	
 

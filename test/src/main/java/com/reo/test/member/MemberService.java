@@ -11,4 +11,8 @@ public interface MemberService {
 	void member_password_update(MemberVO vo);
 	
 	String member_salt(String userid);
+
+	int member_idCheck(String userid);
+	void member_myInfo_update(MemberVO vo);
+	void member_join(MemberVO vo);
 }

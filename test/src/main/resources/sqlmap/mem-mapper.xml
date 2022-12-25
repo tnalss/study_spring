@@ -22,5 +22,31 @@
 	WHERE userid = #{userid}
 </select>
 
+<select id="idCheck" resultType="integer">
+	SELECT count(*) FROM member
+	WHERE userid = #{userid} 
+</select>
+
+<update id="update">
+	UPDATE member 
+	SET salt = #{salt, jdbcType=VARCHAR}, userpw = #{userpw, jdbcType=VARCHAR}
+		, name = #{name, jdbcType=VARCHAR}, email = #{email, jdbcType=VARCHAR}
+		, gender = #{gender}, profile = #{profile, jdbcType=VARCHAR}
+		, phone = #{phone, jdbcType=VARCHAR}, social = #{social, jdbcType=VARCHAR} 
+	WHERE userid = #{userid}
+</update>
+<insert id='insert'>
+ 	INSERT INTO member 
+		(userid, userpw, name, gender, email, phone, post,
+			address, social, profile, birth, salt)
+	VALUES ( #{userid}, #{userpw, jdbcType=VARCHAR}, #{name}, #{gender}
+						, #{email, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR}
+						, #{post, jdbcType=VARCHAR}, #{address, jdbcType=VARCHAR}
+						, #{social, jdbcType=VARCHAR}, #{profile, jdbcType=VARCHAR}
+						, #{birth, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR} )	
+</insert>
+
+
+
 
 </mapper>

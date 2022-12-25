@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="css/styles.css" rel="stylesheet" />
-<link href="css/common.css?" rel="stylesheet" />
+<link href="css/common.css" rel="stylesheet" />
 
 <!-- Bootstrap core JS-->
 <script
@@ -17,9 +17,18 @@
 <!-- Jquery CDN -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
-
-
+<style>
+.naver { background: url("img/naver_login.png") center no-repeat;
+  			background-size: contain;
+  			width:300px;
+  			height:100px;
+  			border:none; }
+.kakao{background: url("img/kakao_login.png") center no-repeat;
+  			background-size: contain;
+  			width:300px;
+  			height:100px;
+  			border:none;}
+</style>
 </head>
 <body>
 	<div class="container">
@@ -42,7 +51,14 @@
 			<div class="row justify-content-center">
 				<input onclick="fn_login()" type="submit"
 					class="mt-3 col-6 btn btn-primary" value="로그인" />
+			<div class="mt-3 row justify-content-center">
+					<input type='button' class='naver social col-6' id='naver'></div>
+			<div class="mt-3 row justify-content-center">
+					<input type='button' class='kakao social col-6' id='kakao'></div>
+
+				
 			</div>
+			
 		</div>
 	</div>
 
@@ -95,6 +111,12 @@
 			if (e.keyCode == 13)
 				fn_login();
 		})
+		
+		
+		$('.social').click(function(){
+			location = $(this).attr('id') + 'Login.mb';
+			});
+		
 	</script>
 </body>
 </html>
