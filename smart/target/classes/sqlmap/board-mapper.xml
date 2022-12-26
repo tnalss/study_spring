@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+<!-- 방명록 글의 총건수 조회 -->
+<select id="total" resultType="integer">
+	SELECT count(*) FROM board
+</select>
+
+<select id="list" resultType="board.BoardVO">
+	SELECT * 
+	FROM (
+		SELECT row_number() over(ORDER BY id) no, b.*, name
+		FROM board b LEFT OUTER JOIN member m
+		ON b.writer = m.userid )
+	WHERE no BETWEEN #{beginList} and#{endList}
+	ORDER BY no DESC 
+</select>
+
+<insert id="insert">
+	INSERT INTO board
+	(title,content,writer)
+	VALUES
+	(#{title},#{content},#{writer})
+
+</insert>
+
+</mapper>
