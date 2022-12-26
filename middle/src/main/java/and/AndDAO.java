@@ -31,5 +31,8 @@ public class AndDAO {
 		return sql.selectOne("me.login",map);
 	}
 	
+	public int insert(MemberVO vo) {
+		return sql.insert("cu.insert",vo);
+	}
 
 }

@@ -6,4 +6,6 @@
 select * from and_member where email = #{email} and pw = #{pw}
 </select>
 
+
+
 </mapper>

@@ -37,6 +37,7 @@
 	<bean class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="hanul_factory"/>
 		<qualifier value="hanul"/>
+		
 	</bean>
 	<bean class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="hr_factory"/>
