@@ -67,7 +67,7 @@
 					style='margin-right: ${i.indent*10}px'></span> <c:if
 						test='${i.indent gt 0}'>
 						<i class="fa-brands fa-replyd font-b"></i>
-					</c:if> <a href="info.no?id=${i.id}"> ${i.title}</a></td>
+					</c:if> <a href="info.no?id=${i.id}&curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword}"> ${i.title}</a></td>
 
 
 				<td>${i.name}</td>

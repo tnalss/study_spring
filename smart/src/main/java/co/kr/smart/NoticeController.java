@@ -1,6 +1,8 @@
 package co.kr.smart;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -74,11 +76,11 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/info.no")
-	public String info(int id,Model model) {
+	public String info(int id,Model model,NoticePageVO page) {
 		
 		//화면에서 사용할 수 있도록 enter 키값을 담아둔다.
 		model.addAttribute("crlf","\r\n");
-		
+		model.addAttribute("page",page);
 		
 		
 		
@@ -113,14 +115,15 @@ public class NoticeController {
 	
 	
 	@RequestMapping("/modify.no")
-	public String modify (int id, Model model) {
+	public String modify (int id, Model model, NoticePageVO page) {
 		model.addAttribute("vo",service.notice_info(id));
+		model.addAttribute("page",page);
 		return "notice/modify";
 	}
 
 	@RequestMapping("/update.no")
 	public String update (NoticeVO vo ,MultipartFile file
-			,HttpServletRequest request) {
+			,HttpServletRequest request, NoticePageVO page) throws UnsupportedEncodingException {
 		
 		//수정전 공지글 정보 조회
 		NoticeVO before = service.notice_info(vo.getId());	
@@ -149,7 +152,10 @@ public class NoticeController {
 			}
 		}
 		service.notice_update(vo);
-		return "redirect:info.no?id="+vo.getId();
+		return "redirect:info.no?id="+vo.getId()+"&curPage="
+		+page.getCurPage()+"&search="+page.getSearch()+"&keyword="+
+		URLEncoder.encode(page.getKeyword(),"utf-8");
+	//파라미터에 한글이 있는경우를 위한 인코딩 처리!
 	}
 	
 	
@@ -167,7 +173,7 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/delete.no")
-	public String delete (int id, HttpServletRequest request) {
+	public String delete (int id, HttpServletRequest request, NoticePageVO page) throws UnsupportedEncodingException {
 		
 		NoticeVO vo = service.notice_info(id);
 		
@@ -175,7 +181,12 @@ public class NoticeController {
 		
 		fileDelete(vo.getFilepath(),request);
 		
-		return "redirect:list.no";
+	
+		
+		
+		return "redirect:list.no?id="+vo.getId()+"&curPage="
+				+page.getCurPage()+"&search="+page.getSearch()+"&keyword="+
+				URLEncoder.encode(page.getKeyword(),"utf-8");
 	}
 	
 	

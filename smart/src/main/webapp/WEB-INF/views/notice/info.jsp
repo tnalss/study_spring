@@ -40,17 +40,17 @@ table td{text-align: center;}
 </tr>
 
 </table>
-
+<c:set var='params' value='curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword}' />
 <div class='btnSet'>
-	<a class='btn-fill' href='list.no'>공지글목록</a>
+	<a class='btn-fill' href='list.no?${params}'>공지글목록</a>
 	<!-- 작성자가 로그인한 경우만 수정/삭제 가능 -->
 	<c:if test='${loginInfo.userid eq vo.writer}'>
-	<a class='btn-fill' href='modify.no?id=${vo.id}'>글수정</a>
+	<a class='btn-fill' href='modify.no?id=${vo.id}&${params}'>글수정</a>
 	<a class='btn-fill btn-delete'>글삭제</a>
 	</c:if>
 	<!-- 로그인했으면 답글 쓰기 가능! -->
 	<c:if test='${not empty loginInfo}'>
-	<a href='reply.no?id=${vo.id}' class="btn-fill">답글쓰기</a>
+	<a href='reply.no?id=${vo.id}&${params}' class="btn-fill">답글쓰기</a>
 	 </c:if>
 </div>
 
@@ -61,7 +61,7 @@ table td{text-align: center;}
 $('.btn-delete').on('click',function(){
 		if(confirm('정말 삭제?')){
 			
-			location='delete.no?id=${vo.id}';
+			location='delete.no?id=${vo.id}&${params}';
 		}
 	
 })
