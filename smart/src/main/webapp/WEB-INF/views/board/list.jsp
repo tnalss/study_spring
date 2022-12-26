@@ -11,7 +11,36 @@
 <form method="post">
 	
 	<div class="w-px1200" id="list-top">
+	
 	<ul>
+		<li>
+		<select name="search" id="w-px1200">
+		<option value="all">전체</option>
+		<option value="title">제목</option>
+		<option value="content">내용</option>
+		</select>		</li>
+		<li>
+		<input type="text" name="keyword" class="w-px300" />
+		</li>		
+		<li>
+		<a href="" class="btn-fill">검색</a>
+		</li>
+	</ul>
+	
+	
+
+	
+	<ul>
+		<li>
+	<select name="pageList" class="w-px100">
+		<c:forEach var='i' begin='1' end="6">
+			<option value="${i*10}" ${page.pageList eq i*10?' selected':'' }>${10*i}개씩</option>
+		
+		</c:forEach>
+	</select>
+	</li>
+	
+	
 		<c:if test="${not empty loginInfo}">
 		<li><a href="new.bo" class="btn-fill">글쓰기</a></li>
 		</c:if>
@@ -53,7 +82,11 @@
 <div class="btnSet">
 	<jsp:include page="/WEB-INF/views/include/page.jsp" />
 </div>
-
+<script>
+	$('[name=pageList]').on('change',function(){
+		$('form').submit();
+	});
+</script>
 
 </body>
 </html>
