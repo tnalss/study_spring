@@ -9,9 +9,8 @@ public class PageVO {
 	
 	
 	//검색관련 필드
-	private String search,keyword;
-	
-	
+	private String search="all",keyword="";
+	private String viewType ="list";
 	
 	
 	

@@ -4,25 +4,60 @@
 
 <!-- 방명록 글의 총건수 조회 -->
 <select id="total" resultType="integer">
-	SELECT count(*) FROM board
+	SELECT count(*) FROM board <include refid="board_where"/>
 </select>
 
+
+<sql id="board_where">
+	<choose>
+	
+		<when test="search=='all'">
+			WHERE title LIKE '%' || #{keyword} || '%'
+			or content like '%' || #{keyword} || '%'
+			or writer in (SELECT userid FROM member WHERE name like '%'||#{keyword}||'%' )
+		</when>
+		<when test="search=='title' or search=='content'">
+			WHERE ${search} like '%' || #{keyword} || '%'
+		</when>
+		<when test="search=='writer'">
+			WHERE writer in (SELECT userid FROM member WHERE name like '%'||#{keyword}||'%' )
+		</when>
+	</choose>
+
+</sql>
+
+
 <select id="list" resultType="board.BoardVO">
-	SELECT * 
-	FROM (
-		SELECT row_number() over(ORDER BY id) no, b.*, name
+	SELECT (SELECT count(*) from board_file f WHERE b.id=f.board_id) fileCount,b.*
+	FROM (SELECT row_number() over(ORDER BY id) no, b.*, name
 		FROM board b LEFT OUTER JOIN member m
-		ON b.writer = m.userid )
+		ON b.writer = m.userid 
+		<include refid="board_where"/>) b
 	WHERE no BETWEEN #{beginList} and#{endList}
 	ORDER BY no DESC 
 </select>
 
 <insert id="insert">
+
+	<selectKey keyProperty="id" resultType="integer" order="AFTER">
+		SELECT seq_board.currval FROM dual 
+	</selectKey>
+
 	INSERT INTO board
 	(title,content,writer)
 	VALUES
 	(#{title},#{content},#{writer})
 
+
+</insert>
+<!-- https://mybatis.org/mybatis-3/ko/dynamic-sql.html -->
+<insert id="fileInsert">
+	<foreach item='item' collection="fileList"
+	open="INSERT ALL" separator=" " close="select * from dual">
+	
+	INTO board_file (board_id , filename, filepath)
+	VALUES ( #{id},#{item.filename},#{item.filepath} )
+	</foreach>
 </insert>
 
 </mapper>

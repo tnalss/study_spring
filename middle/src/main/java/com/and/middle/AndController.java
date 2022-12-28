@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.google.gson.Gson;
 
-import and.AndDAO;
 import common.CommonService;
 import customer.CustomerVO;
 import member.MemberVO;
@@ -25,11 +24,11 @@ public class AndController {
 	@Autowired
 	private CommonService common;
 	
-	private AndDAO dao;
-
-	public AndController(AndDAO dao) {
-		this.dao = dao;
-	}
+	//private AndDAO dao;
+//
+//	public AndController(AndDAO dao) {
+//		this.dao = dao;
+//	}
 
 	// @ResponseBody
 	@RequestMapping("/and")
@@ -40,41 +39,41 @@ public class AndController {
 	// value="/and",produces="text/html;charset=utf-8"
 	// 나중에 문제 생길 여지가 있기떄문에 String으로 바꿔주시는게 좋아요 감사합니다!
 
-	@RequestMapping(value = "/cus", produces = "text/html;charset=utf-8")
-	public String customer() {
-		return new Gson().toJson(dao.customer_select());
-	}
+//	@RequestMapping(value = "/cus", produces = "text/html;charset=utf-8")
+//	public String customer() {
+//		return new Gson().toJson(dao.customer_select());
+//	}
+//
+//	@RequestMapping(value = "/memberOne", produces = "text/html;charset=utf-8")
+//	public String memberOne() {
+//		List<CustomerVO> list = dao.customer_select();
+//		return new Gson().toJson(list.get(0));
+//	}
+//
+//	@RequestMapping(value = "/andVo", produces = "text/html;charset=utf-8")
+//	public String andVo() {
+//		List<CustomerVO> list = dao.customer_select();
+//		for (CustomerVO v : list) {
+//			System.out.println(v.getEmail());
+//		}
+//		return new Gson().toJson(list.get(1));
+//	}
 
-	@RequestMapping(value = "/memberOne", produces = "text/html;charset=utf-8")
-	public String memberOne() {
-		List<CustomerVO> list = dao.customer_select();
-		return new Gson().toJson(list.get(0));
-	}
-
-	@RequestMapping(value = "/andVo", produces = "text/html;charset=utf-8")
-	public String andVo() {
-		List<CustomerVO> list = dao.customer_select();
-		for (CustomerVO v : list) {
-			System.out.println(v.getEmail());
-		}
-		return new Gson().toJson(list.get(1));
-	}
-
-	@RequestMapping(value = "/login", produces = "text/html;charset=utf-8")
-	public String login(String email, String pw) {
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("email", email);
-		map.put("pw", pw);
-		MemberVO vo = dao.member_login(map);
-
-		if (vo != null) {
-			System.out.println(email + " : " + pw);
-			return new Gson().toJson(vo);
-		} else {
-			System.out.println(email + " : " + pw);
-			return "실패";
-		}
-	}
+//	@RequestMapping(value = "/login", produces = "text/html;charset=utf-8")
+//	public String login(String email, String pw) {
+//		HashMap<String, String> map = new HashMap<String, String>();
+//		map.put("email", email);
+//		map.put("pw", pw);
+//		MemberVO vo = dao.member_login(map);
+//
+//		if (vo != null) {
+//			System.out.println(email + " : " + pw);
+//			return new Gson().toJson(vo);
+//		} else {
+//			System.out.println(email + " : " + pw);
+//			return "실패";
+//		}
+//	}
 
 	@RequestMapping("/social.me")
 	public void kakao_login(String email) {
@@ -99,7 +98,8 @@ public class AndController {
 			System.out.println(path);
 			vo.setFile_path(path);
 		}
-		int result=dao.insert(vo);
+		int result=  sql.insert("cu.insert", vo ) ; ////dao.insert(vo);
+		
 		return new Gson().toJson(result+"");
 
 	}

@@ -16,7 +16,22 @@ table.tb-list tr { height: 38px; }
 table th, table td { border: 1px solid #b0b0b0; }
 table td { padding-left: 10px }
 table th { background-color: #f6f6f6; }
-table a:hover { font-weight: bold; text-decoration: underline; }
+table a:hover,ul a:hover { font-weight: bold; text-decoration: underline; }
+
+
+
+/* 말줄임처리 */
+table.tb-list { table-layout: fixed; }
+table.tb-list td {overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 그리드일때말줄임 */
+ul.grid li div:nth-child(1){
+	overflow:hidden; -webkit-line-clamp:3; display:-webkit-box;
+	-webkit-box-orient:vertical;word-break: break-all;
+}
+
+/*  */
+
 
 select {
 	height: 34px;
@@ -128,8 +143,10 @@ div.invalid { color: #ff0000; font-size: 14px; font-weight: bold; }
 .align > * { margin-right: 5px}
 .full{width:calc(100% - 30px);}
 #delete,#attach-file,#delete-file{display:none;}
+.delete,.attach-file,.delete-file{display:none;}
 .date + #delete {position:relative; right:30px;}
-#preview img{max-height:24px;}
+#preview img,.preview img{max-height:24px;}
+
 .font-b{color:black;}
 .font-red{font-size:20px; color:#ff0000}
 .kakao{background: url("../img/kakaologin.png") center no-repeat; background-size:cover;}
@@ -165,3 +182,15 @@ div.align>*{margin-right:15px;}
 .page-list a:hover{
 	background-color: rgba(51,103,214,0.1); color:#3367d6;
 } 
+
+ul.grid{
+	display:flex; margin: 0 auto; flex-wrap: wrap;
+	
+}
+ul.grid li div{padding: 7px 10px 9px;}
+ul.grid li div:nth-child(2){padding: 0px 10px ;}
+ul.grid li div:nth-child(1){height: 57px ;}
+
+ul.grid li { text-align: left; width:232px; height:150px; border:1px solid #b0b0b0; box-sizing: border-box; margin-right: 10px  !important}
+ul.grid li:nth-child(5n){margin-right:0px  !important}
+ul.grid li:nth-child(5) ~ li {margin-top: 10px !important;}

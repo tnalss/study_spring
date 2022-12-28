@@ -10,6 +10,8 @@ select * from customer order by 1
 delete customer where id = #{id}
 </delete>
 <insert id="insert">
-	insert into and_member values (#{email),#{pw},#{name},#{gender},#{file_path,jdbcType=VARCHAR})
+	insert into and_member values (
+	#{email},#{pw},#{name},#{gender},#{file_path,jdbcType=VARCHAR}
+	)
 </insert>
 </mapper>

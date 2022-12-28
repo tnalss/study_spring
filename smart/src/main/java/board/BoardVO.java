@@ -12,5 +12,8 @@ public class BoardVO {
 	private String title,content,writer,name;
 	private Date writedate;
 	
-	private List<BoardFileVO> filelist;
+	private List<BoardFileVO> fileList;
+	
+	
+	private int fileCount;
 }

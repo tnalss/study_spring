@@ -10,11 +10,12 @@
 <body>
 
 	<h3>공지사항</h3>
-	<form action="">
+	<!-- 이거 처리 안하면 , 가 붙는 현상 배열의 형태로 저장이 되어버리는 .. -->
+	<form action="list.no" method="post">
 		<div id='list-top' class='w-px1200'>
 			<ul>
 				<li>
-				<select class="w-px100" name="search" id="">
+				<select class="w-px100" name="search" >
 						<option value="all" ${page.search eq "all" ? " selected" : "" } >전체</option>
 						<option value="title" ${page.search eq "title" ? " selected" : ""}>제목</option>
 						<option value="content" ${page.search eq 'content' ? ' selected' : ''}>내용</option>

@@ -90,3 +90,57 @@ function emptyCheck(){
 	});
 	return ok;
 } 
+
+function copyFile(){
+	var last =  $('div.align').last();
+	last.after( last.clone() );
+	
+	//복제한 태그를 초기화
+	last =  $('div.align').last();
+	last.find('.attach-file').val('');
+	last.find( '.file-name' ).text('');
+	last.find('.delete-file').css('display','none');
+	
+}
+
+//첨부파일 추가 태그 동적 생성
+$(document).on('change','.attach-file',function(){
+	var attached = this.files[0];
+	var $div =  $(this).closest('div');
+	
+	//파일을 선택한 경우 
+	if( attached ) { 
+		//선택한 파일이 없는 경우에만 기존태그 복사붙이기
+		if($div.children('.file-name').text()=='')	copyFile();
+		
+		$div.children('.file-name').text( attached.name ); //선택파일명 보이게
+		$div.children('.delete-file').css('display','inline');//삭제버튼 보이게
+		
+		//이미지파일인 경우 보여직
+		if ( $div.children('.preview').length>0){
+			if(isImage(attached.name)){
+				$div.children('.preview').html('<img>');
+				var reader = new FileReader();
+				reader.onload = function(e){
+					$div.find('.preview img').attr('src',e.target.result);
+				}
+				reader.readAsDataURL( attached );
+			} else{
+				// 내용을 없애서 처리 가능
+				//$div.find('.preview img').html('');
+				$div.find('.preview').remove();
+				//$div.find('.preview').empty();
+				
+			}
+		}
+		
+		
+	} else{
+		//선택창을 열었다가 취소하는 경우도 파일 삭제
+		$div.remove();
+	}
+}).on('click','.delete-file', function(){
+	//선택한 삭제버튼에 해당하는 파일 태그 삭제
+	$(this).closest('div').remove();
+	
+})
