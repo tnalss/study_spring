@@ -125,6 +125,8 @@
 
 /* 내용보기위한 함수 폼태그의 액션속성을 바꿔주는 처리를 한다. */
 function fn_submit(id){
+	
+	$('[name=curPage]').val(${page.curPage});
 	$('[name=id]').val(id);
 	$('form').attr('action','info.bo');
 	$('form').submit();
@@ -134,15 +136,17 @@ function fn_submit(id){
  /* 반복문이 있기때문에 찾아갈수가없음 각각의 값들을 담아놓아야함. */
  /* data속성을 사용해보자. */
  $('.title').on('click',function(){
-	 fn_submit($(this).data('no'));
+	 fn_submit($(this).data('id'));
  });
 
 	$('[name=viewType],[name=pageList]').on('change',function(){
+		$('form').attr('action','list.bo');
 		$('form').submit();
 	});//콤마에 주의해야한다.
 
 	
 	$('.btn-search').on('click',function(){
+		$('form').attr('action','list.bo');
 		$('form').submit();
 	})
 	

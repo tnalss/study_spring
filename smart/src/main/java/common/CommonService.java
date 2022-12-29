@@ -29,7 +29,22 @@ import member.MemberVO;
 
 @Service
 public class CommonService {
+			
+	//첨부파일 삭제 메소드
+	public void fileDelete(String filepath, HttpServletRequest request) {
+		if( filepath != null ) {
+
+			filepath = filepath.replace(appURL(request), "d://app"+request.getContextPath());
+			
+			File file = new File( filepath );
+			if (file.exists()) file.delete();
+
+		}
+	}
+	
+
 	// 첨부파일 업로드 처리
+	
 	
 	public String fileUplaod(String category, MultipartFile file, HttpServletRequest request) {
 		

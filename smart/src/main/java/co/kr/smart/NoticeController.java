@@ -135,7 +135,7 @@ public class NoticeController {
 			vo.setFilepath( common.fileUplaod("notice", file, request) );
 			//sql문도 수정필요
 			//수정전 첨부되어있는 파일이 있으면 물리적 파일도 삭제
-			fileDelete( before.getFilepath() , request );
+			common.fileDelete( before.getFilepath() , request );
 			
 		} else {
 		//파일을 첨부하지 않는 경우
@@ -144,7 +144,7 @@ public class NoticeController {
 			//jquery이용, input hidden이용 filename파라미터 값을 받아 데이터객체에 담겨있음
 			if( vo.getFilename().isEmpty() ) {
 				//원래 O -> 삭제 
-				fileDelete( before.getFilepath() , request );
+				common.fileDelete( before.getFilepath() , request );
 			} else {
 				//원래 O 그대로 두는 경우
 				vo.setFilename(before.getFilename());
@@ -158,19 +158,7 @@ public class NoticeController {
 	//파라미터에 한글이 있는경우를 위한 인코딩 처리!
 	}
 	
-	
-	//첨부파일 삭제 메소드
-	private void fileDelete(String filepath, HttpServletRequest request) {
-		if( filepath != null ) {
-			//db
-			//실제
-			filepath = filepath.replace(common.appURL(request), "d://app"+request.getContextPath());
-			
-			File file = new File( filepath );
-			if (file.exists()) file.delete();
-			
-		}
-	}
+
 	
 	@RequestMapping("/delete.no")
 	public String delete (int id, HttpServletRequest request, NoticePageVO page) throws UnsupportedEncodingException {
@@ -179,7 +167,7 @@ public class NoticeController {
 		
 		service.notice_delete(id);
 		
-		fileDelete(vo.getFilepath(),request);
+		common.fileDelete(vo.getFilepath(),request);
 		
 	
 		

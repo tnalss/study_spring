@@ -1,7 +1,5 @@
 package board;
 
-import java.util.List;
-
 public interface BoardService {
 	//crud
 	//C방명록 신규저장
@@ -18,4 +16,12 @@ public interface BoardService {
 	int board_update(BoardVO vo);
 	//D방명록 글 삭제
 	int board_delete(int id);
+	
+	
+	//방명록에 처뭅된 각 파일 정보 조회
+	BoardFileVO board_file_info(int id);
+	
+	
+	//첨부파일 목록 삭제
+	int board_file_delete( String removed );
 }

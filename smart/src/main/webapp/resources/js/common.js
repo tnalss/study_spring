@@ -116,6 +116,7 @@ $(document).on('change','.attach-file',function(){
 		$div.children('.file-name').text( attached.name ); //선택파일명 보이게
 		$div.children('.delete-file').css('display','inline');//삭제버튼 보이게
 		
+		removedFile($div);
 		//이미지파일인 경우 보여직
 		if ( $div.children('.preview').length>0){
 			if(isImage(attached.name)){
@@ -141,6 +142,25 @@ $(document).on('change','.attach-file',function(){
 	}
 }).on('click','.delete-file', function(){
 	//선택한 삭제버튼에 해당하는 파일 태그 삭제
-	$(this).closest('div').remove();
-	
+	//$(this).closest('div').remove();
+	var div = $(this).closest('div'); 
+	removedFile( div );
+	div.remove();	
 })
+
+
+function removedFile( div ){
+	if ($('[name=removed]').length == 0 ) return;
+	var removed = $('[name=removed]').val();
+	if( removed =='') removed =[];
+	else removed = removed.indexOf(',') == -1 ? [removed] : removed.split(',');
+		
+	if( div.data('file') )   removed.push(String( div.data('file') ) )   //DB에서 삭제해야할 정보
+	
+	
+	//중복제거를 위한 집합객체 생성
+	removed = new Set(removed);
+	$('[name=removed]').val( Array.from( removed ) );
+	//console.log( 'removed', removed )
+	//console.log( '태그', $('[name=removed]').val() );
+}
