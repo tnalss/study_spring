@@ -10,9 +10,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import board.BoardCommentVO;
 import board.BoardFileVO;
 import board.BoardPageVO;
 import board.BoardService;
@@ -173,9 +176,26 @@ public class BoardController {
 		model.addAttribute("page",page);
 		model.addAttribute("download",false);
 		model.addAttribute("crlf","\r\n");
-		//model.addAttribute("lf","\n");
+		model.addAttribute("lf","\n");
 		
 		//응답화면 연결
 		return "board/redirect";
+	}
+	
+	// 방명록 댓글저장처리 요청
+	@ResponseBody
+	@RequestMapping("/board/comment/insert")
+	public boolean comment_regist(BoardCommentVO vo) {
+		//화면에서 입력한 정보를 db에 저장
+		return board.board_comment_insert(vo) == 1 ? true:false;
+		
+	}
+	
+	//방명록 댓글 목록화면 요청
+	@RequestMapping("/board/comment/list/{id}")
+	public String comment_list(@PathVariable int id,Model model) {
+		//db에서 댓글목록을 조회해와서 목록화면에 출력 -> Model에 담는다.
+		model.addAttribute("list", board.board_comment_list(id));
+		return "board/comment/comment_list";
 	}
 }

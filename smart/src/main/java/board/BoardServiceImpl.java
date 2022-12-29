@@ -52,4 +52,27 @@ public class BoardServiceImpl implements BoardService {
 		return dao.board_file_delete(removed);
 	}
 
+	@Override
+	public int board_comment_insert(BoardCommentVO vo) {
+
+		return dao.board_comment_insert(vo);
+	}
+
+	@Override
+	public List<BoardCommentVO> board_comment_list(int board_id) {
+		return dao.board_comment_list(board_id);
+	}
+
+	@Override
+	public int board_comment_update(BoardCommentVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int board_comment_delete(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

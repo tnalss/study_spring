@@ -1,10 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+table td{text-align: left}
+#comment-regist{
+	width:600px; margin:0 auto; text-align:left
+}
+#comment-regist div{
+	display:flex; justify-content:space-between;
+}
+#comment{height:80px; margin-top: 5px }
+
+</style>
 </head>
 <body>
 <h3>방명록 안내</h3>
@@ -32,7 +44,7 @@
 	<th>조회수</th>
 	<td>${vo.readcnt }</td>
 </tr>
-<tr><th>내용</th><td colspan='5'>${vo.content }</td></tr>
+<tr><th>내용</th><td colspan='5'>${fn:replace(vo.content,crlf,'<br>')}</td></tr>
 <tr><th>첨부파일</th><td colspan='5'>
 <c:forEach items='${vo.fileList}' var='file'>
 <div class='align'>
@@ -55,6 +67,17 @@
 <a class="btn-fill remove">정보삭제</a>
 </c:if>
 </div>
+
+
+<div id="comment-regist">
+	<div>
+		<span>댓글작성</span>
+		<a class="btn-fill-s btn-regist">댓글등록</a>
+	</div>
+	<textarea id="comment" class="full"></textarea>
+
+</div>
+
 
 <form method="post">
 	<input type="hidden" name="id" value="${vo.id}"/>
@@ -115,6 +138,42 @@ $('.modify').on('click',function(){
 	$('form').attr('action','modify.bo');
 	$('form').submit();
 });
+
+
+
+$('.btn-regist').on('click',function(){
+	if( ${empty loginInfo}){
+		alert('댓글을 등록하려면 로그인 하세요');
+	} else if ($.trim($('#comment').val())==''){
+		alert('댓글을 입력하세요');
+		$('#comment').val('');
+		$('#comment').focus();
+		
+	}else {
+		
+		//현재화면 그대로 있어야하므로 ajax
+		$.ajax({
+			url:'board/comment/insert',
+			data: {
+				content : $('#comment').val(),
+				board_id : ${vo.id},
+				writer : '${loginInfo.userid}'
+			},
+			success: function(response){
+				if(response){
+					alert('댓글이 등록되었습니다.');
+					$('#comment').val('');
+				}else
+					alert('댓글등록 실패');
+			},
+			error: function(req,text){
+				alert(text+' : '+ req.status)
+			}
+		});
+		
+	}
+});
+
 
 </script>
 

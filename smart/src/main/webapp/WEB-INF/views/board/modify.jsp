@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +18,7 @@
 		</tr>
 		<tr>
 			<th>내용</th>
-			<td><textarea name="content" class='full chk' title="내용">${fn:replace(vo.content,crlf,'<br>')} </textarea></td>
+			<td><textarea name="content" class='full chk' title="내용">${vo.content} </textarea></td>
 		</tr>
 	<tr>
 		<th>첨부파일</th>

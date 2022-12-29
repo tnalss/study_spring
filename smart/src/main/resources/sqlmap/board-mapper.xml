@@ -2,6 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
 
+
+<!-- 방명록 댓글저장 -->
+
+<insert id="commentInsert">
+	INSERT INTO board_comment (content, writer, board_id)
+	VALUES (#{content},#{writer},#{board_id})
+</insert>
+
+
+<select id="commentList" resultType="board.BoardCommentVO">
+	SELECT c.*, name
+	FROM board_comment c left outer join member m
+	ON m.userid=c.writer
+	WHERE board_id = #{board_id}
+
+</select>
+
+
+
+
+
 <!-- 문자열이라 ${}를씀 -->
 <delete id="fileDelete">
 	DELETE board_file

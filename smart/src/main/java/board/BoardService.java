@@ -1,5 +1,7 @@
 package board;
 
+import java.util.List;
+
 public interface BoardService {
 	//crud
 	//C방명록 신규저장
@@ -24,4 +26,18 @@ public interface BoardService {
 	
 	//첨부파일 목록 삭제
 	int board_file_delete( String removed );
+	
+	
+	
+	// 댓글신규저장
+	int board_comment_insert(BoardCommentVO vo);
+	// 댓글목록조회
+	List<BoardCommentVO> board_comment_list(int board_id);
+	// 댓글번경저장
+	int board_comment_update(BoardCommentVO vo);
+	
+	// 댓글삭제(댓글의 아이디)
+	int board_comment_delete(int id);
+	
+	
 }
