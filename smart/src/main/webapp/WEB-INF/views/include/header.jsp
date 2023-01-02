@@ -50,7 +50,8 @@ header div li:not(:first-child) {
 			<li><a href='list.bo'
 				${category eq 'bo' ? 'class="active"' : ''}>방명록</a></li>
 			<li><a>공공데이터</a></li>
-			<li><a>시각화</a></li>
+			<li><a href='list.vi'
+				${category eq 'vi' ? 'class="active"' : ''}>시각화</a></li>
 		</ul>
 	</nav>
 	<div>
