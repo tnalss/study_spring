@@ -18,14 +18,22 @@ public class Visualimpl implements VisualService {
 
 	@Override
 	public List<HashMap<String, Object>> hirement_year() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.hirement_year();
 	}
 
 	@Override
 	public List<HashMap<String, Object>> hirement_month() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.hirement_month();
+	}
+
+	@Override
+	public List<HashMap<String, Object>> hirement_top3_year() {
+		return dao.hirement_top3_year();
+	}
+
+	@Override
+	public List<HashMap<String, Object>> hirement_top3_month() {
+		return dao.hirement_top3_month();
 	}
 
 }
