@@ -26,6 +26,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.css"/>
+<!-- yearpicker를 위한 선언 css와 js파일.. -->
+<link rel="stylesheet" href="css/yearpicker.css"/>
+<script src="js/yearpicker.js"></script>
 <script>
 
 var colors = [ '#009628', '#d64f15', '#f5dd02', '#026ff5', '#9402f5'
@@ -52,21 +55,40 @@ $(function(){
 				
 	});
 	
-	//클릭이벤트 강제발생//부서원수가 클릭되어있을 수 있게
-	$('#tabs li').eq(1).trigger('click');
-	
+
 	$('.legend').each(function(idx){
 		$(this).css('background-color', colors[idx]);
 	});
 
 	
 	$('[name=unit],#top3').change(function(){
+		$('.year').eq(0).closest('label').css('display',$('[name=unit]:checked').val()=='year'?'inline':'none');
 		hirement();
 	});
+	//기본 년도가 입력되어있게
+	var thisYear = new Date().getFullYear();
 
-
+	$('#begin').val(thisYear-9);
+	$('#end').val(thisYear);
+	
+	
+	$('#begin').yearpicker({
+		year:thisYear-9,
+		endYear: thisYear,
+	});
+	$('#end').yearpicker({
+		year:thisYear,
+		endYear: thisYear,
+	});
+	//클릭이벤트 강제발생//부서원수가 클릭되어있을 수 있게
+	$('#tabs li').eq(1).trigger('click');
+	
 })
 
+$(document).on('click','.yearpicker-items',function(){
+	hirement();
+	
+});
 
 
 
@@ -83,25 +105,64 @@ function hirement_top3(){
 	var unit = $('[name=unit]:checked').val();
 	$.ajax({
 		url: 'visual/hirement/top3/'+unit,
+		type: 'post',
+		contentType: 'application/json',
+		data: JSON.stringify( { begin:$('#begin').val(), end:$('#end').val() } ),
 		success: function(response){
 			console.log(response);
 			
 			var info =[];
 			if(unit=='year'){
-			info.push(['부서명','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010']);
-			$(response).each(function(){
-				info.push(new Array(this.DEPARTMENT_NAME, this.Y2001, this.Y2002, this.Y2003, this.Y2004, this.Y2005, this.Y2006, this.Y2007, this.Y2008, this.Y2009, this.Y2010));
-			});
+			//info.push(['부서명','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010']);
+			
+			//$(response).each(function(){
+			//	info.push(new Array(this.DEPARTMENT_NAME, this.Y2001, this.Y2002, this.Y2003, this.Y2004, this.Y2005, this.Y2006, this.Y2007, this.Y2008, this.Y2009, this.Y2010));
+			//});
+				var years = ['부서명'];
+				for(var year=$('#begin').val(); year<=$('#end').val(); year++ ){
+					years.push( year );
+				}
+				info.push( years );
+				$(response).each(function(){
+					years = [ this.DEPARTMENT_NAME ];
+					for(var year=$('#begin').val(); year<=$('#end').val(); year++ ){
+						years.push( this['Y'+year] ? this['Y'+year] : 0 );
+					}
+					info.push( years );
+				});
+			
 			} else {
-				
+				info.push(['부서명','01','02','03','04','05','06','07','08','09','10','11','12']);
+			
+			
+				$(response).each(function(){
+					info.push([this.DEPARTMENT_NAME, this.M01, this.M02, this.M03, this.M04
+						, this.M05, this.M06, this.M07, this.M08, this.M09, this.M10, this.M11, this.M12])
+				});
 			}
 			
 			c3.generate({
 				bindto:'#graph',
 				data:{columns : info, x:'부서명', type: unit=='year'?'bar':'line', labels:true},
-				axis:{x:'category'}
+				axis:{
+					x:{type:'category',tick:{
+						format: function(d){
+							//console.log(info[0][d+1],d)
+							return info[0][d+1]+ (unit=='year'?'년':'월');
+						}
+					} },
+					y:{label:{text:(unit=='year'?'년도별 ' :'월별 ') + '채용인원수',position:'outer-top'}}},
+				padding:{bottom:50},
+				grid:{y:{show:true}},
+				size:{height:450},
+				legend: {
+					item: { tile: {width:15, height:15}},
+					padding:40,
+				}
+				
 			});
-			
+			$('.c3-legend-item').css('font-size','16px');
+			$('.c3-line').css('stroke-width','height:3px');
 		},error: function(req,text){
 			alert(text+":"+req.status);
 		}
@@ -115,6 +176,9 @@ function hirement_company(){
 	
 	$.ajax({
 		url:'visual/hirement/'+ unit,
+		type: 'post',
+		contentType:'application/json',
+		data: JSON.stringify({ begin:$('#begin').val(), end:$('#end').val() }),
 		success : function(response){
 			console.log(response)
 			var name=[ unit ], count=['채용인원수'];
@@ -291,6 +355,8 @@ function pie_chart(info){
 	<label><input type='checkbox' id='top3'>TOP3 부서</label>
 		<label><input type='radio' name='unit' value='year' checked>년도별</label>
 		<label><input type='radio' name='unit' value='month'>월별</label>
+		<label><input type="text" id='begin' class='year w-px80' readonly/> ~
+		<input type="text" id='end' class='year w-px80' readonly /></label>
 	</div>	
 	
 	<div id='graph'></div> <!-- 그래프표현할 부분 -->

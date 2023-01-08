@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -35,8 +36,8 @@ public class VisualizationController {
 	//년도별 채용인원수 정보 조회요청
 	@ResponseBody
 	@RequestMapping("/visual/hirement/year")
-	public Object hirement_year() {
-		 List<HashMap<String,Object>> list = service.hirement_year();
+	public Object hirement_year(@RequestBody HashMap<String,Object> map) {
+		 List<HashMap<String,Object>> list = service.hirement_year(map);
 		 
 		 return list;
 	}
@@ -53,8 +54,8 @@ public class VisualizationController {
 	//상위 3개부서의 년도별 채용인원수 정보 조회요청
 	@ResponseBody
 	@RequestMapping("visual/hirement/top3/year")
-	public Object hirement_top3_year() {
-		return service.hirement_top3_year();
+	public Object hirement_top3_year(@RequestBody HashMap<String,Object> map) {
+		return service.hirement_top3_year(map);
 	}
 	
 	//월별
